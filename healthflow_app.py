@@ -625,15 +625,14 @@ elif page == "Patient Advice":
             for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
                 is_sel = (st.session_state.sel_urgency == ti)
                 with urg_cols[idx % 2]:
-                    if st.button(
-                        ti + "  \n" + sub,
-                        key="urg_" + str(idx),
-                        use_container_width=True,
-                        type="primary" if is_sel else "secondary"
-                    ):
-                        st.session_state.sel_urgency = ti
-                        st.rerun()sel_urgency = ti
-                            st.rerun()
+                if st.button(
+                    ti + "  \n" + sub,
+                    key="urg_" + str(idx),
+                    use_container_width=True,
+                    type="primary" if is_sel else "secondary"
+                ):
+                    st.session_state.sel_urgency = ti
+                    st.rerun()
 
     sel_urg = st.session_state.sel_urgency
     urgency_type = "minor"
