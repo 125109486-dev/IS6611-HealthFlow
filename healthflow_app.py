@@ -296,7 +296,7 @@ def load_synthetic():
 
 def load_gp():
     try:
-        df = pd.read_csv("https://raw.githubusercontent.com/125109486-dev/IS6611-HealthFlow/refs/heads/main/gp_out_of_hours.csv", encoding="latin-1", header=1)
+        df = pd.read_csv("https://raw.githubusercontent.com/125109486-dev/Health-Flow-Datasets-Code/refs/heads/main/gp_out_of_hours.csv", encoding="latin-1", header=1)
         df = df[["Name","Address","Opening Hours","Day"]].dropna(subset=["Name"])
         df.columns = ["name","address","hours","days"]
         return df
