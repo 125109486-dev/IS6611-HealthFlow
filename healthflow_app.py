@@ -165,7 +165,7 @@ p, div, span, li{font-size:15px;line-height:1.7;}
 </style>
 """, unsafe_allow_html=True)
 
-# ── Hospital map ──────────────────────────────────────────────────────────────
+#Hospital map 
 HOSPITAL_MAP = {
     "Dublin": ["Mater Misericordiae University Hospital","St. James's Hospital",
                     "St. Vincent's University Hospital","Beaumont Hospital",
@@ -360,7 +360,7 @@ def load_miu():
         return pd.DataFrame()
 
 
-master    = load_master()
+master = load_master()
 synthetic = load_synthetic()
 latest_syn = synthetic.sort_values("date").groupby("Hospital").last().reset_index()
 gp_df  = load_gp()
@@ -382,7 +382,7 @@ def get_hosp_data(hospital_name):
         r   = row.iloc[0]
         occ = float(r["Occupancy_Rate_pct"]) if pd.notna(r["Occupancy_Rate_pct"]) else 5.0
         troll = int(r["Daily_Total"]) if pd.notna(r["Daily_Total"]) else 0
-        bis   = r["Behavioural_Impact_Score"]
+        bis = r["Behavioural_Impact_Score"]
         # Derive status from occupancy — don't trust stale Traffic_Light_Status field
         status = occ_to_status(occ)
         return occ, status, troll, bis
@@ -692,9 +692,7 @@ page = st.session_state.page
 sel_county = st.session_state.get("landing_county", list(HOSPITAL_MAP.keys())[0])
 sel_age    = st.session_state.get("landing_age", "26–64 — Adult")
 
-# ══════════════════════════════════════════════════════════════════════════════
 # PAGE 1 — ED STATUS
-# ══════════════════════════════════════════════════════════════════════════════
 if page == "ED Status":
     age_hospitals, age_note = get_hospitals_for_age(sel_county, sel_age)
 
@@ -729,8 +727,8 @@ if page == "ED Status":
                                     key="mh_age")
         if st.button("Update", type="primary", key="mh_update"):
             st.session_state.landing_county = new_county
-            st.session_state.landing_age    = new_age
-            st.session_state.show_change    = False
+            st.session_state.landing_age = new_age
+            st.session_state.show_change = False
             st.rerun()
 
     # Refresh after update
@@ -752,8 +750,8 @@ if page == "ED Status":
         dot_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#94A3B8")
         cap_pct = min(int(occ*10), 100)
         cap_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#16A34A")
-        is_chi  = "CHI" in hosp
-        badge   = "Children's" if is_chi else "Public"
+        is_chi = "CHI" in hosp
+        badge = "Children's" if is_chi else "Public"
         maps_url = GOOGLE_MAPS.get(hosp, f"https://maps.google.com/?q={hosp.replace(' ','+')}+Ireland")
 
         forecast = forecast_occupancy_4h(hosp, occ)
@@ -794,9 +792,8 @@ if page == "ED Status":
         st.session_state.page = "Patient Advice"
         st.rerun()
 
-# ══════════════════════════════════════════════════════════════════════════════
 # PAGE 2 — PATIENT ADVICE
-# ══════════════════════════════════════════════════════════════════════════════
+
 elif page == "Patient Advice":
     st.markdown("""
     <div class="hero">
@@ -1080,9 +1077,8 @@ elif page == "Patient Advice":
             else:
                 st.warning("Please enter your email.")
 
-# ══════════════════════════════════════════════════════════════════════════════
 # PAGE 3 — RESOURCES
-# ══════════════════════════════════════════════════════════════════════════════
+
 elif page == "Resources":
     st.markdown("""
     <div class="hero">
@@ -1320,7 +1316,7 @@ elif page == "Resources":
 
     st.divider()
 
-# GP Out of Hours from data
+# GP Out of Hours 
     st.markdown('<div class="sec-title">GP Out-of-Hours Services Near You</div>', unsafe_allow_html=True)
     res_county = st.session_state.get("landing_county", None)
     if not res_county:
@@ -1400,9 +1396,9 @@ elif page == "Resources":
     for col, (title, desc, contact, link) in zip(
         [mh_col1, mh_col2, mh_col3],
         [
-            ("Samaritans",  "24/7 emotional support for anyone in distress",          "116 123 (Free)",      "tel:116123"),
-            ("Pieta House", "Free therapy for those in suicidal distress or self-harm","1800 247 247",        "tel:1800247247"),
-            ("Text 50808",  "24/7 anonymous text support service",                    "Text HELLO to 50808", "sms:50808"),
+            ("Samaritans",  "24/7 emotional support for anyone in distress", "116 123 (Free)", "tel:116123"),
+            ("Pieta House", "Free therapy for those in suicidal distress or self-harm","1800 247 247", "tel:1800247247"),
+            ("Text 50808",  "24/7 anonymous text support service", "Text HELLO to 50808", "sms:50808")
         ]
     ):
         with col:
@@ -1423,7 +1419,7 @@ elif page == "Resources":
     st.markdown('<div class="sec-title">Digital Resources</div>', unsafe_allow_html=True)
     dr_col1, dr_col2, dr_col3 = st.columns(3)
     digital = [
-        ("HSE Health App",       "Access health information and services on the go",   "Download", "https://www.hse.ie/eng/", "#0F766E "),
+        ("HSE Health App", "Access health information and services on the go", "Download", "https://www.hse.ie/eng/", "#0F766E "),
     ]
     for col, (title, desc, cta, link, colour) in zip([dr_col1, dr_col2, dr_col3], digital):
         with col:
@@ -1479,10 +1475,7 @@ elif page == "Resources":
             </a>
         </div>""", unsafe_allow_html=True)
 
-
-# ══════════════════════════════════════════════════════════════════════════════
 # PAGE 3.1 — SURVEY
-# ══════════════════════════════════════════════════════════════════════════════
 elif page == "Survey":
     st.markdown("""
     <div class="hero">
@@ -1580,9 +1573,7 @@ elif page == "Survey":
         elif submitted:
             st.warning("Please answer the first two questions before submitting.")
 
-# ══════════════════════════════════════════════════════════════════════════════
 # PAGE 4 — CONTACT
-# ══════════════════════════════════════════════════════════════════════════════
 elif page == "Contact":
     st.markdown("""
     <div class="hero">
