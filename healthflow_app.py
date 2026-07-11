@@ -1461,7 +1461,7 @@ elif page == "Contact":
                 <div style="font-size:26px;font-weight:700;color:white">Call 999</div>
             </div>
         </div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.85);max-width:400px;line-height:1.5">
+        <div style="font-size:18px;color:rgba(255,255,255,0.85);max-width:400px;line-height:1.5">
             Do not delay if you experience any of these symptoms. Time is critical in emergency situations.
         </div>
     </div>
