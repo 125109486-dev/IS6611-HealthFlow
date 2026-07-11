@@ -954,7 +954,7 @@ elif page == "Resources":
         ("Cold Sores (Herpes Labialis)", "Antiviral creams and oral antivirals for cold sores are available from your pharmacist without a prescription.", None),
         ("Shingles", "Pharmacists can supply antiviral treatment for shingles. Early treatment (within 72 hours of rash) is most effective.", "Start treatment as early as possible."),
         ("Impetigo", "A common bacterial skin infection. Pharmacists can assess and supply appropriate antibiotic treatment.", None),
-        ("Hay Fever & Allergic Rhinitis", "Antihistamines, nasal sprays, and eye drops are available directly from pharmacists for seasonal and year-round allergy symptoms.", None),
+        ("Hay Fever & Allergic Rhinitis", "Antihistamines, nasal sprays, and eye drops are available from pharmacists for allergy symptoms.", None),
         ("Emergency Contraception", "The morning-after pill is available directly from pharmacists without a prescription, including out of hours.", None),
         ("Head Lice", "Assessment and treatment for head lice infestations, including medicated lotions and wet-combing advice.", None),
         ("Athlete's Foot & Fungal Infections", "Antifungal creams and treatments are available directly from pharmacists for skin, nail, and mouth fungal infections.", None),
