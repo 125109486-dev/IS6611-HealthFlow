@@ -1,5 +1,6 @@
 import streamlit as st
 from statsmodels.tsa.statespace.sarimax import SARIMAX
+from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -395,62 +396,92 @@ def get_hosp_data(hospital_name):
         return occ, status, troll, bis
     return 5.0, "Green", 0, 0.0
 
-latest_syn["derived_status"] = latest_syn["occupancy_rate_pct"].apply(occ_to_status)
-red_c = int((latest_syn["derived_status"]=="Red").sum())
-amb_c = int((latest_syn["derived_status"]=="Amber").sum())
-grn_c = int((latest_syn["derived_status"]=="Green").sum())
+def _diurnal_multiplier(hour_decimal):
+    hours = [0, 3, 6, 9, 12, 15, 18, 21, 24]
+    mult  = [0.90, 0.82, 0.85, 1.00, 1.05, 1.10, 1.18, 1.05, 0.90]
+    return float(np.interp(hour_decimal % 24, hours, mult))
 
 @st.cache_data(show_spinner=False)
-def forecast_occupancy_4h(hospital_name):
-    """
-    Fits a SARIMAX model on this hospital's occupancy history and forecasts 4 hours ahead.
-    Returns (forecast_df or None, current_occ, predicted_occ_4h, step_minutes)
-    """
+def _fit_daily_sarimax(hospital_name):
     hist = synthetic[synthetic["Hospital"].str.lower().str.contains(
         hospital_name.lower().split()[0], na=False)].copy()
     hist = hist.sort_values("date").drop_duplicates(subset="date")
     hist = hist.dropna(subset=["occupancy_rate_pct"])
 
-    if len(hist) < 6:
-        current = float(hist["occupancy_rate_pct"].iloc[-1]) if len(hist) else 5.0
-        return None, current, current, None
+    if len(hist) < 14:
+        return None
 
-    # Work out how far apart readings actually are, so "4 hours ahead" means
-    # the right number of forecast steps regardless of the data's granularity
-    deltas = hist["date"].diff().dropna()
-    step_minutes = deltas.median().total_seconds() / 60 if len(deltas) else 60
-    if step_minutes <= 0:
-        step_minutes = 60
-    steps_for_4h = max(1, round(240 / step_minutes))
-
-    series = hist.set_index("date")["occupancy_rate_pct"]
+    series = hist.set_index("date")["occupancy_rate_pct"].asfreq("D")
+    series = series.interpolate(limit_direction="both")
 
     try:
-        model = SARIMAX(series, order=(1, 1, 1), seasonal_order=(0, 0, 0, 0),
+        model = SARIMAX(series, order=(1, 1, 1), seasonal_order=(1, 0, 0, 7),
                          enforce_stationarity=False, enforce_invertibility=False)
         fit = model.fit(disp=False)
-        result = fit.get_forecast(steps=steps_for_4h)
-        pred_mean = result.predicted_mean.clip(lower=0, upper=100)
-        pred_ci = result.conf_int(alpha=0.2).clip(lower=0, upper=100)
-
-        forecast_df = pd.DataFrame({
-            "date": pred_mean.index,
-            "occupancy_rate_pct": pred_mean.values,
-            "lower": pred_ci.iloc[:, 0].values,
-            "upper": pred_ci.iloc[:, 1].values,
-        })
-        current_occ = float(series.iloc[-1])
-        predicted_occ_4h = float(pred_mean.iloc[-1])
-        return forecast_df, current_occ, predicted_occ_4h, step_minutes
-
+        result = fit.get_forecast(steps=1)
+        next_day = float(result.predicted_mean.iloc[0])
+        ci = result.conf_int(alpha=0.2)
+        lower = float(ci.iloc[0, 0])
+        upper = float(ci.iloc[0, 1])
+        last_value = float(series.iloc[-1])
+        return {
+            "last_value": np.clip(last_value, 0, 100),
+            "next_day_forecast": np.clip(next_day, 0, 100),
+            "ci_lower": np.clip(lower, 0, 100),
+            "ci_upper": np.clip(upper, 0, 100),
+        }
     except Exception:
-        # Fallback if SARIMAX can't converge on this hospital's data:
-        # simple recent-trend extrapolation instead of crashing
-        current_occ = float(series.iloc[-1])
-        lookback = min(6, len(series))
-        trend_per_step = (series.iloc[-1] - series.iloc[-lookback]) / max(lookback - 1, 1)
-        predicted_occ_4h = float(np.clip(current_occ + trend_per_step * steps_for_4h, 0, 100))
-        return None, current_occ, predicted_occ_4h, step_minutes
+        return None
+
+def forecast_occupancy_4h(hospital_name, current_occ):
+    now = datetime.now()
+    future = now + timedelta(hours=4)
+    now_hour = now.hour + now.minute / 60
+    future_hour = future.hour + future.minute / 60
+
+    sarimax_result = _fit_daily_sarimax(hospital_name)
+
+    if sarimax_result is not None:
+        daily_trend_delta = sarimax_result["next_day_forecast"] - sarimax_result["last_value"]
+        ci_width = sarimax_result["ci_upper"] - sarimax_result["ci_lower"]
+    else:
+        daily_trend_delta = 0.0
+        ci_width = 4.0
+
+    trend_component = daily_trend_delta * (4 / 24)
+    diurnal_ratio = _diurnal_multiplier(future_hour) / _diurnal_multiplier(now_hour)
+    diurnal_component = current_occ * (diurnal_ratio - 1)
+
+    predicted_4h = float(np.clip(current_occ + trend_component + diurnal_component, 0, 100))
+    band = ci_width * np.sqrt(4 / 24) / 2
+    pred_lower = float(np.clip(predicted_4h - band, 0, 100))
+    pred_upper = float(np.clip(predicted_4h + band, 0, 100))
+
+    curve_hours = np.linspace(0, 4, 9)
+    curve_points = []
+    for h in curve_hours:
+        t = now + timedelta(hours=h)
+        t_hour = t.hour + t.minute / 60
+        ratio = _diurnal_multiplier(t_hour) / _diurnal_multiplier(now_hour)
+        trend_frac = daily_trend_delta * (h / 24)
+        val = np.clip(current_occ + current_occ * (ratio - 1) + trend_frac, 0, 100)
+        curve_points.append({"time": t, "occupancy_rate_pct": val})
+    curve_df = pd.DataFrame(curve_points)
+
+    return {
+        "current_occ": current_occ,
+        "predicted_4h": predicted_4h,
+        "pred_lower": pred_lower,
+        "pred_upper": pred_upper,
+        "curve_df": curve_df,
+        "has_sarimax": sarimax_result is not None,
+    }
+
+latest_syn["derived_status"] = latest_syn["occupancy_rate_pct"].apply(occ_to_status)
+red_c = int((latest_syn["derived_status"]=="Red").sum())
+amb_c = int((latest_syn["derived_status"]=="Amber").sum())
+grn_c = int((latest_syn["derived_status"]=="Green").sum())
+
 
 #Session state 
 if "onboarded" not in st.session_state:
@@ -934,6 +965,52 @@ elif page == "Patient Advice":
                 o2,s2,_,_ = get_hosp_data(h)
                 _,_,rl2 = rag_meta(s2)
                 st.markdown(f"- **{h}** — {rl2}")
+
+    forecast = forecast_occupancy_4h(sel_hosp, occ)
+
+        delta = forecast["predicted_4h"] - forecast["current_occ"]
+        if delta > 1:
+            trend_word, trend_color, trend_arrow = "Rising", "#DC2626", "↑"
+        elif delta < -1:
+            trend_word, trend_color, trend_arrow = "Falling", "#16A34A", "↓"
+        else:
+            trend_word, trend_color, trend_arrow = "Stable", "#64748B", "→"
+
+        st.markdown(f"""
+        <div class="rec-card" style="margin-top:14px">
+            <div style="color:#0D9488;font-size:12px;font-weight:700;letter-spacing:0.05em;margin-bottom:10px">
+                ESTIMATED OCCUPANCY — NEXT 4 HOURS
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div>
+                    <div style="font-size:12px;color:#94A3B8">Right now</div>
+                    <div style="font-size:24px;font-weight:700;color:#0D2137">{forecast['current_occ']:.1f}%</div>
+                </div>
+                <div style="font-size:20px;color:{trend_color}">{trend_arrow}</div>
+                <div style="text-align:right">
+                    <div style="font-size:12px;color:#94A3B8">In ~4 hours</div>
+                    <div style="font-size:24px;font-weight:700;color:{trend_color}">{forecast['predicted_4h']:.1f}%</div>
+                </div>
+            </div>
+            <div style="font-size:13px;color:{trend_color};font-weight:600;margin-bottom:6px">{trend_word} trend</div>
+            <div style="font-size:11px;color:#94A3B8;line-height:1.5">
+                Estimate range: {forecast['pred_lower']:.1f}%–{forecast['pred_upper']:.1f}%. Based on a SARIMAX day-ahead
+                trend model combined with a typical intraday occupancy pattern.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=forecast["curve_df"]["time"], y=forecast["curve_df"]["occupancy_rate_pct"],
+            mode="lines+markers", name="Estimated occupancy",
+            line=dict(color=trend_color, width=2)
+        ))
+        fig.update_layout(
+            height=180, margin=dict(l=10, r=10, t=10, b=10),
+            showlegend=False, yaxis_title="Occupancy %", plot_bgcolor="white"
+        )
+        st.plotly_chart(fig, use_container_width=True)
                 
     symptoms = [
         (1,  "Chest pain or chest tightness",            "Especially if crushing, radiating, or associated with sweating or nausea"),
