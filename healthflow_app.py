@@ -399,6 +399,68 @@ if "page" not in st.session_state:
     st.session_state.page = "ED Status"
 if "show_change" not in st.session_state:
     st.session_state.show_change = False
+if "fb_q4" not in st.session_state:
+    st.session_state.fb_q4 = None
+if "fb_q5" not in st.session_state:
+    st.session_state.fb_q5 = None
+
+@st.dialog("Patient Feedback Survey")
+def feedback_survey():
+    st.markdown('<div style="font-size:14px;color:#64748B;margin-bottom:16px">Help us improve HealthFlow — this takes less than a minute. All responses are anonymous.</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin-bottom:8px">About your condition</div>', unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        q1 = st.selectbox("Condition / symptom", [
+            "Select...", "Chest pain / breathing difficulty", "Fever / flu-like symptoms",
+            "Injury (sprain, cut, burn)", "UTI / infection", "Mental health concern",
+            "Abdominal / stomach pain", "Skin condition / rash", "Cold / sore throat / cough",
+            "Child illness", "Other",
+        ])
+    with c2:
+        q_age = st.selectbox("Patient age group", [
+            "Under 5 — Infant / Toddler","5–15 — Child","16–25 — Young Adult",
+            "26–64 — Adult","65+ — Senior",
+        ], index=3)
+    st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin:14px 0 8px">What you did</div>', unsafe_allow_html=True)
+    wcol1, wcol2 = st.columns([1, 1])
+    with wcol1:
+        q2 = st.selectbox("Action taken", [
+            "Select...", "Called 999 / went to A&E", "Visited a Minor Injury Unit",
+            "Contacted my GP", "Used GP out-of-hours service", "Used Urgent Virtual Care (UVC)",
+            "Went to a pharmacy", "Stayed at home / self-managed", "Still deciding",
+        ])
+    st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin:14px 0 8px">Your satisfaction</div>', unsafe_allow_html=True)
+    q3 = st.select_slider("Satisfaction with recommendation",
+        options=["Very Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very Satisfied"], value="Satisfied")
+    st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin:14px 0 8px">Did the recommendation match what you needed?</div>', unsafe_allow_html=True)
+    q4_options = ["Yes, it was accurate", "Somewhat different", "No, different advice needed"]
+    q4cols = st.columns(3)
+    for i, opt in enumerate(q4_options):
+        with q4cols[i]:
+            is_sel = st.session_state.fb_q4 == opt
+            if st.button(opt, key=f"fb_q4_{i}", use_container_width=True, type="primary" if is_sel else "secondary"):
+                st.session_state.fb_q4 = opt
+                st.rerun()
+    st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin:14px 0 8px">Would you use HealthFlow again?</div>', unsafe_allow_html=True)
+    q5_options = ["Definitely yes", "Probably yes", "Not sure", "Probably not", "Definitely not"]
+    q5cols = st.columns(5)
+    for i, opt in enumerate(q5_options):
+        with q5cols[i]:
+            is_sel = st.session_state.fb_q5 == opt
+            if st.button(opt, key=f"fb_q5_{i}", use_container_width=True, type="primary" if is_sel else "secondary"):
+                st.session_state.fb_q5 = opt
+                st.rerun()
+    st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin:14px 0 8px">Any other comments?</div>', unsafe_allow_html=True)
+    q6 = st.text_area("", placeholder="Tell us how we can improve HealthFlow...", height=70, label_visibility="collapsed")
+    st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+    if st.button("Submit Feedback", type="primary", use_container_width=True):
+        if q1 != "Select..." and q2 != "Select..." and st.session_state.fb_q4 and st.session_state.fb_q5:
+            st.success("Thank you for your feedback! Your response has been recorded.")
+            st.session_state.fb_q4 = None
+            st.session_state.fb_q5 = None
+        else:
+            st.warning("Please answer all questions before submitting.")
+            
 
 #Landing page
 if not st.session_state.onboarded:
@@ -799,8 +861,7 @@ elif page == "Patient Advice":
     col_sv1, col_sv2 = st.columns(2)
     with col_sv1:
         if st.button("Leave Feedback on this Recommendation", use_container_width=True):
-            st.session_state.page = "Survey"
-            st.rerun()
+            feedback_survey()
     with col_sv2:
         pass
 
