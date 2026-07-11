@@ -828,29 +828,29 @@ elif page == "Resources":
 
     # Out of hours mapping
     if res_county in ["Cork", "Kerry"]:
-        ooh_services = [("SouthDoc (Cork & Kerry)", "0818 355 999", "tel:0818355999", "https://www.southdoc.ie")]
+        ooh_services = [("SouthDoc (Cork & Kerry)", "0818 355 999", "tel:0818355999", "https://www.southdoc.ie/")]
     elif res_county in ["Waterford", "Wexford", "Kilkenny", "Carlow", "Tipperary", "Wicklow"]:
-        ooh_services = [("Caredoc (South East)", "0818 300 365", "tel:0818300365", "https://www.caredoc.ie")]
+        ooh_services = [("Caredoc (South East)", "0818 300 365", "tel:0818300365", "https://www.caredoc.ie/")]
     elif res_county in ["Limerick", "Clare"]:
-        ooh_services = [("Shannondoc (Mid-West)", "0818 123 500", "tel:0818123500", "https://www.shannondoc.ie")]
+        ooh_services = [("Shannondoc (Mid-West)", "0818 123 500", "tel:0818123500", "https://www.shannondoc.ie/")]
     elif res_county in ["Laois", "Longford", "Offaly", "Westmeath"]:
-        ooh_services = [("MIDOC (Midlands)", "1800 302 702", "tel:1800302702", "https://midoctlm.ie")]
+        ooh_services = [("MIDOC (Midlands)", "1800 302 702", "tel:1800302702", "https://midoctlm.ie/")]
     elif res_county in ["Galway", "Mayo", "Roscommon"]:
-        ooh_services = [("Westdoc (West)", "0818 360 000", "tel:0818360000", "https://www.westdoc.ie")]
+        ooh_services = [("Westdoc (West)", "0818 360 000", "tel:0818360000", "https://www.westdoc.ie/")]
     elif res_county == "Donegal":
-        ooh_services = [("NowDoc (Donegal)", "0818 400 911", "tel:0818400911", "https://www.northdoc.ie")]
+        ooh_services = [("NowDoc (Donegal)", "0818 400 911", "tel:0818400911", "https://www.northdoc.ie/")]
     elif res_county in ["Cavan", "Monaghan", "Louth", "Meath"]:
-        ooh_services = [("NEDOC (North East)", "1800 777 911", "tel:1800777911", "https://www.nedoc.ie")]
+        ooh_services = [("NEDOC (North East)", "1800 777 911", "tel:1800777911", "https://www.nedoc.ie"/)]
     elif res_county in ["Dublin", "Kildare"]:
         ooh_services = [("Find your local Dublin/Kildare out-of-hours service", "Search HSE directory", "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours", "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours")]
     elif res_county in ["Sligo", "Leitrim"]:
-        ooh_services = [("Caredoc (Sligo/Leitrim extension)", "0818 365 399", "tel:0818365399", "https://www.caredoc.ie")]
+        ooh_services = [("Caredoc (Sligo/Leitrim extension)", "0818 365 399", "tel:0818365399", "https://www.caredoc.ie/")]
     else:
         ooh_services = [
-            ("SouthDoc (Cork & Kerry)", "0818 355 999", "tel:0818355999", "https://www.southdoc.ie"),
-            ("Caredoc (South East)", "0818 300 365", "tel:0818300365", "https://www.caredoc.ie"),
-            ("Shannondoc (Mid-West)", "0818 123 500", "tel:0818123500", "https://www.shannondoc.ie"),
-            ("Westdoc (West)", "0818 360 000", "tel:0818360000", "https://www.westdoc.ie"),
+            ("SouthDoc (Cork & Kerry)", "0818 355 999", "tel:0818355999", "https://www.southdoc.ie/"),
+            ("Caredoc (South East)", "0818 300 365", "tel:0818300365", "https://www.caredoc.ie/"),
+            ("Shannondoc (Mid-West)", "0818 123 500", "tel:0818123500", "https://www.shannondoc.ie/"),
+            ("Westdoc (West)", "0818 360 000", "tel:0818360000", "https://www.westdoc.ie/"),
         ]
 
     ooh_html = ""
