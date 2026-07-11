@@ -42,7 +42,7 @@ st.markdown("""
 .nav-logo span{color:#0F766E ;}
 
 /* Hospital card */
-.hcard{background:white;border-radius:12px;padding:20px;border:1px solid #E2E8F0;
+.hcard{background:FAFAF9;border-radius:12px;padding:20px;border:1px solid #E2E8F0;
        box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:14px;position:relative;
        width:100%;}
 .hcard-name{font-size:17px;font-weight:700;color:#0D2137;margin-bottom:4px;padding-right:24px;line-height:1.3;}
@@ -67,7 +67,7 @@ st.markdown("""
 .sec-title{font-size:20px;font-weight:700;color:#0D2137;margin:1.4rem 0 1rem;}
 
 /* Advice cards */
-.advice-card{background:white;border-radius:12px;padding:18px;
+.advice-card{background:FAFAF9;border-radius:12px;padding:18px;
              border:1px solid #E2E8F0;margin-bottom:14px;}
 .rec-card{background:white;border-radius:12px;padding:22px;
           border:1px solid #E2E8F0;box-shadow:0 2px 6px rgba(0,0,0,0.06);margin-top:16px;}
@@ -558,7 +558,7 @@ if page == "ED Status":
                 <div class="tdot" style="background:{dot_col}"></div>
                 <div class="hcard-name">{hosp}</div>
                 <div class="hcard-loc">{sel_county} &nbsp;
-                    <span style="background:#EFF6FF;color:#2563EB;font-size:10px;font-weight:600;
+                    <span style="background:#EFF6FF;color:#0E7490;font-size:10px;font-weight:600;
                                  padding:2px 6px;border-radius:4px">{badge}</span>
                 </div>
                 <span class="sbadge {sc}">{rl}</span>
@@ -831,7 +831,7 @@ elif page == "Resources":
             <div style="width:56px;height:56px;background:#EFF6FF;border-radius:50%;
                         display:flex;align-items:center;justify-content:center;
                         margin:0 auto 14px auto;font-size:24px">2</div>
-            <div style="color:#2563EB;font-size:11px;font-weight:700;letter-spacing:0.08em;margin-bottom:8px">STEP 2 — IF NEEDED</div>
+            <div style="color:#0E7490;font-size:11px;font-weight:700;letter-spacing:0.08em;margin-bottom:8px">STEP 2 — IF NEEDED</div>
             <div style="font-size:17px;font-weight:700;color:#0D2137;margin-bottom:10px">Your GP</div>
             <div style="font-size:14px;color:#64748B;line-height:1.6">
                 For illness requiring diagnosis, ongoing conditions, referrals, or anything your pharmacist cannot manage.
@@ -890,7 +890,7 @@ elif page == "Resources":
             "<div style='background:#F8FAFC;border-radius:8px;padding:14px;margin-bottom:8px'>"
             "<div style='font-size:14px;color:#64748B;margin-bottom:6px'>" + name + "</div>"
             "<a href='" + tel_link + "' style='font-size:16px;font-weight:700;color:#0F766E ;text-decoration:none;display:block;margin-bottom:6px'>" + number + "</a>"
-            "<a href='" + web_link + "' target='_blank' style='font-size:13px;color:#2563EB;text-decoration:none;font-weight:500'>Visit website</a>"
+            "<a href='" + web_link + "' target='_blank' style='font-size:13px;color:#0E7490;text-decoration:none;font-weight:500'>Visit website</a>"
             "</div>"
         )
     col1, col2 = st.columns(2)
@@ -1411,7 +1411,7 @@ elif page == "Contact":
             "<div style='font-size:15px;font-weight:700;color:#1D4ED8;margin-bottom:12px'>GP Services</div>"
             "<div style='font-size:13px;color:#1E40AF;line-height:1.6;margin-bottom:16px'>"
             "For non-emergency medical advice, contact your GP during office hours.</div>"
-            "<div style='font-size:12px;color:#2563EB;font-weight:500;margin-bottom:12px'>Mon–Fri: 9:00 AM – 5:00 PM</div>"
+            "<div style='font-size:12px;color:#0E7490;font-weight:500;margin-bottom:12px'>Mon–Fri: 9:00 AM – 5:00 PM</div>"
             "<a href='https://www.google.com/maps/search/GP+doctor+near+me' target='_blank'"
             " style='display:block;background:#1D4ED8;color:white;text-align:center;"
             "padding:10px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none'>"
