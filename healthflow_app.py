@@ -102,10 +102,6 @@ st.markdown("""
     margin:0!important;
     line-height:1.5!important;
 }
-.st-key-urgency_grid .stButton button[kind="primary"],
-.st-key-urgency_grid .stButton button[kind="secondary"]{
-    min-height:76px!important;
-}
 
 /* Resources */
 .resource-card{background:white;border-radius:12px;padding:18px;
@@ -622,13 +618,12 @@ elif page == "Patient Advice":
 
     # ── Two-column layout: options on the left, live recommendation on the right ──
     col_opts, col_rec = st.columns([3, 2], gap="large")
-
+    
     with col_opts:
         with st.container(key="urgency_grid"):
             urg_cols = st.columns(2)
             for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
                 is_sel = (st.session_state.sel_urgency == ti)
-                dot_color = "#DC2626" if ut == "life" else ("#D97706" if ut == "moderate" else "#16A34A")
                 with urg_cols[idx % 2]:
                     if st.button(
                         ti + "  \n" + sub,
@@ -637,7 +632,8 @@ elif page == "Patient Advice":
                         type="primary" if is_sel else "secondary"
                     ):
                         st.session_state.sel_urgency = ti
-                        st.rerun()
+                        st.rerun()sel_urgency = ti
+                            st.rerun()
 
     sel_urg = st.session_state.sel_urgency
     urgency_type = "minor"
@@ -729,7 +725,6 @@ elif page == "Patient Advice":
         "</div></div>",
         unsafe_allow_html=True
     )
-
 
     st.divider()
     col_sv1, col_sv2 = st.columns(2)
