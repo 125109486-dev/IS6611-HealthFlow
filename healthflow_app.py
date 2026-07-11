@@ -843,7 +843,7 @@ elif page == "Patient Advice":
 
     
     # Important Update
-    st.markdown("""
+    st.markdown(f"""
     <div class="update-card">
         <span class="important-badge">Important Updates</span>
         <span style="font-size:13px;color:#6b7280;margin-left:8px">{last_updated}</span>
