@@ -1455,7 +1455,7 @@ elif page == "Contact":
     <div style="background:#DC2626;border-radius:12px;padding:20px 24px;margin-bottom:20px;
                 display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
         <div style="display:flex;align-items:center;gap:14px">
-            <div style="font-size:22px;color:white">📞</div>
+            <div style="font-size:22px;color:white">☎</div>
             <div>
                 <div style="font-size:12px;color:rgba(255,255,255,0.8)">Emergency Services</div>
                 <div style="font-size:26px;font-weight:700;color:white">Call 999</div>
