@@ -293,43 +293,38 @@ def load_synthetic():
     return df
 
 @st.cache_data
-
-@st.cache_data
 def load_gp():
-    try:
-        df = pd.read_csv(
-            "https://raw.githubusercontent.com/125109486-dev/IS6611-HealthFlow/refs/heads/main/gp_out_of_hours.csv",
-            encoding="latin-1", header=1
-        )
-        df = df[["Name","Address","Opening Hours","Day"]]
-        df = df.dropna(how="all")
-        df["Name"] = df["Name"].ffill()
-        df["Address"] = df["Address"].ffill()
-        df = df.dropna(subset=["Name"])
+    df = pd.read_csv(
+        "https://raw.githubusercontent.com/125109486-dev/IS6611-HealthFlow/refs/heads/main/gp_out_of_hours.csv",
+        encoding="latin-1", header=1
+    )
+    df = df[["Name","Address","Opening Hours","Day"]].copy()
+    df = df.dropna(how="all")
+    df["Name"] = df["Name"].ffill()
+    df["Address"] = df["Address"].ffill()
+    df = df.dropna(subset=["Name"])
 
-        # Fix mis-decoded apostrophes
-        for col in ["Name", "Address"]:
-            df[col] = (df[col].astype(str)
-                       .str.replace("â€™", "'", regex=False)
-                       .str.replace("Â", "", regex=False)
-                       .str.replace("â€“", "-", regex=False))
+    for col in ["Name", "Address"]:
+        df[col] = (df[col].astype(str)
+                   .str.replace("â€™", "'", regex=False)
+                   .str.replace("Â", "", regex=False)
+                   .str.replace("â€“", "-", regex=False))
 
-        def get_county(addr):
-            if pd.isna(addr):
-                return ""
-            parts = [p.strip() for p in str(addr).split(",")]
-            return parts[-2] if len(parts) >= 2 else ""
+    def get_county(addr):
+        if pd.isna(addr):
+            return ""
+        parts = [p.strip() for p in str(addr).split(",")]
+        return parts[-2] if len(parts) >= 2 else ""
 
-        df["County"] = df["Address"].apply(get_county)
+    df["County"] = df["Address"].apply(get_county)
 
-        grouped = df.groupby(["Name","Address","County"], sort=False).apply(
-            lambda g: "; ".join(f"{row['Opening Hours']} ({row['Day'].strip()})" for _, row in g.iterrows())
-        ).reset_index(name="Hours")
+    grouped = df.groupby(["Name","Address","County"], sort=False).apply(
+        lambda g: "; ".join(f"{row['Opening Hours']} ({str(row['Day']).strip()})" for _, row in g.iterrows())
+    ).reset_index(name="Hours")
 
-        grouped.columns = ["name","address","county","hours"]
-        return grouped
-    except Exception:
-        return pd.DataFrame()
+    grouped.columns = ["name","address","county","hours"]
+    return grouped
+
 @st.cache_data
 def load_miu():
     try:
