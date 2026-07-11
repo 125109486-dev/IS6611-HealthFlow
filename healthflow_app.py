@@ -86,6 +86,18 @@ st.markdown("""
 .crit-name{font-size:15px;font-weight:600;color:#0D2137;}
 .crit-sub{font-size:13px;color:#64748B;}
 
+.st-key-urgency_grid .stButton button{
+    justify-content:flex-start!important;
+    text-align:left!important;
+    height:auto!important;
+    padding:14px 16px!important;
+    white-space:normal!important;
+}
+.st-key-urgency_grid .stButton button p{
+    text-align:left!important;
+    width:100%;
+}
+
 /* Resources */
 .resource-card{background:white;border-radius:12px;padding:18px;
                border:1px solid #E2E8F0;margin-bottom:14px;}
