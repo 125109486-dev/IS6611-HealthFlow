@@ -897,64 +897,6 @@ elif page == "Patient Advice":
             </div>
         </div>
         """, unsafe_allow_html=True)
-
-        forecast_df, current_occ, predicted_occ_4h, step_min = forecast_occupancy_4h(sel_hosp)
-
-        delta = predicted_occ_4h - current_occ
-        if delta > 1:
-            trend_word, trend_color, trend_arrow = "Rising", "#DC2626", "↑"
-        elif delta < -1:
-            trend_word, trend_color, trend_arrow = "Falling", "#16A34A", "↓"
-        else:
-            trend_word, trend_color, trend_arrow = "Stable", "#64748B", "→"
-
-        st.markdown(f"""
-        <div class="rec-card" style="margin-top:14px">
-            <div style="color:#0D9488;font-size:12px;font-weight:700;letter-spacing:0.05em;margin-bottom:10px">
-                4-HOUR OCCUPANCY FORECAST
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-                <div>
-                    <div style="font-size:12px;color:#94A3B8">Right now</div>
-                    <div style="font-size:24px;font-weight:700;color:#0D2137">{current_occ:.1f}%</div>
-                </div>
-                <div style="font-size:20px;color:{trend_color}">{trend_arrow}</div>
-                <div style="text-align:right">
-                    <div style="font-size:12px;color:#94A3B8">In 4 hours</div>
-                    <div style="font-size:24px;font-weight:700;color:{trend_color}">{predicted_occ_4h:.1f}%</div>
-                </div>
-            </div>
-            <div style="font-size:13px;color:{trend_color};font-weight:600">{trend_word} trend</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        if forecast_df is not None:
-            hist_recent = synthetic[synthetic["Hospital"].str.lower().str.contains(
-                sel_hosp.lower().split()[0], na=False)].sort_values("date").tail(12)
-
-            fig = go.Figure()
-            fig.add_trace(go.Scatter(
-                x=hist_recent["date"], y=hist_recent["occupancy_rate_pct"],
-                mode="lines+markers", name="History",
-                line=dict(color="#0D9488", width=2)
-            ))
-            fig.add_trace(go.Scatter(
-                x=forecast_df["date"], y=forecast_df["occupancy_rate_pct"],
-                mode="lines+markers", name="Forecast",
-                line=dict(color="#DC2626", width=2, dash="dash")
-            ))
-            fig.add_trace(go.Scatter(
-                x=pd.concat([forecast_df["date"], forecast_df["date"][::-1]]),
-                y=pd.concat([forecast_df["upper"], forecast_df["lower"][::-1]]),
-                fill="toself", fillcolor="rgba(220,38,38,0.1)",
-                line=dict(color="rgba(0,0,0,0)"), showlegend=False, hoverinfo="skip"
-            ))
-            fig.update_layout(
-                height=220, margin=dict(l=10, r=10, t=10, b=10),
-                showlegend=True, legend=dict(orientation="h", y=1.15),
-                yaxis_title="Occupancy %", plot_bgcolor="white"
-            )
-            st.plotly_chart(fig, use_container_width=True)
         
         if urgency_type == "life":
             st.error("Call 999 immediately. Do not drive yourself to hospital.")
@@ -1013,16 +955,16 @@ elif page == "Patient Advice":
         st.plotly_chart(fig, use_container_width=True)
                 
     symptoms = [
-        (1,  "Chest pain or chest tightness",            "Especially if crushing, radiating, or associated with sweating or nausea"),
-        (2,  "Sudden shortness of breath",               "Could indicate respiratory failure, pulmonary embolism, or cardiac issues"),
-        (3,  "Sudden weakness, numbness, or paralysis",  "Especially one-sided — possible stroke"),
-        (4,  "Altered level of consciousness",           "Confusion, collapse, fainting, or unresponsiveness"),
-        (5,  "Severe allergic reaction",                 "Facial/lip/tongue swelling, wheezing, difficulty breathing"),
-        (6,  "Uncontrolled bleeding",                    "External or suspected internal bleeding"),
-        (7,  "Severe abdominal pain",                    "Especially with rigidity, fever, or vomiting"),
-        (8,  "High fever with signs of infection",       "Fever + confusion, rapid heart rate, low blood pressure (possible sepsis)"),
-        (9,  "Persistent seizures or first-time seizure","Especially if lasting more than 5 minutes"),
-        (10, "Severe headache of sudden onset",          "Sudden, intense headache unlike any experienced before"),
+        (1, "Chest pain or chest tightness", "Especially if crushing, radiating, or associated with sweating or nausea"),
+        (2, "Sudden shortness of breath", "Could indicate respiratory failure, pulmonary embolism, or cardiac issues"),
+        (3, "Sudden weakness, numbness, or paralysis", "Especially one-sided — possible stroke"),
+        (4, "Altered level of consciousness", "Confusion, collapse, fainting, or unresponsiveness"),
+        (5, "Severe allergic reaction", "Facial/lip/tongue swelling, wheezing, difficulty breathing"),
+        (6, "Uncontrolled bleeding", "External or suspected internal bleeding"),
+        (7, "Severe abdominal pain", "Especially with rigidity, fever, or vomiting"),
+        (8, "High fever with signs of infection", "Fever + confusion, rapid heart rate, low blood pressure (possible sepsis)"),
+        (9, "Persistent seizures or first-time seizure","Especially if lasting more than 5 minutes"),
+        (10, "Severe headache of sudden onset", "Sudden, intense headache unlike any experienced before"),
     ]
     symptoms_html = ""
     for num, title, desc in symptoms:
