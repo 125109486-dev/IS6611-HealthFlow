@@ -840,7 +840,7 @@ elif page == "Resources":
     elif res_county == "Donegal":
         ooh_services = [("NowDoc (Donegal)", "0818 400 911", "tel:0818400911", "https://www.northdoc.ie/")]
     elif res_county in ["Cavan", "Monaghan", "Louth", "Meath"]:
-        ooh_services = [("NEDOC (North East)", "1800 777 911", "tel:1800777911", "https://www.nedoc.ie"/)]
+        ooh_services = [("NEDOC (North East)", "1800 777 911", "tel:1800777911", "https://www.nedoc.ie")]
     elif res_county in ["Dublin", "Kildare"]:
         ooh_services = [("Find your local Dublin/Kildare out-of-hours service", "Search HSE directory", "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours", "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours")]
     elif res_county in ["Sligo", "Leitrim"]:
