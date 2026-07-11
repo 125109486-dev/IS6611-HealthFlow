@@ -21,6 +21,13 @@ st.markdown("""
 #MainMenu,footer,header{visibility:hidden;}
 [data-testid="collapsedControl"]{display:none;}
 
+.st-key-fb_q5_grid .stButton button{
+    font-size:11px!important;
+    padding:8px 4px!important;
+    white-space:nowrap!important;
+    line-height:1.2!important;
+}
+
 /* Mobile-first responsive */
 .block-container{padding:0 1rem 2rem 1rem!important;max-width:100%!important;}
 
@@ -443,13 +450,15 @@ def feedback_survey():
                 st.rerun()
     st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin:14px 0 8px">Would you use HealthFlow again?</div>', unsafe_allow_html=True)
     q5_options = ["Definitely yes", "Probably yes", "Not sure", "Probably not", "Definitely not"]
-    q5cols = st.columns(5)
-    for i, opt in enumerate(q5_options):
-        with q5cols[i]:
-            is_sel = st.session_state.fb_q5 == opt
-            if st.button(opt, key=f"fb_q5_{i}", use_container_width=True, type="primary" if is_sel else "secondary"):
-                st.session_state.fb_q5 = opt
-                st.rerun()
+    with st.container(key="fb_q5_grid"):
+        q5cols = st.columns(5)
+        for i, opt in enumerate(q5_options):
+            with q5cols[i]:
+                is_sel = st.session_state.fb_q5 == opt
+                if st.button(opt, key=f"fb_q5_{i}", use_container_width=True, type="primary" if is_sel else "secondary"):
+                    st.session_state.fb_q5 = opt
+                    st.rerun()
+                    
     st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin:14px 0 8px">Any other comments?</div>', unsafe_allow_html=True)
     q6 = st.text_area("", placeholder="Tell us how we can improve HealthFlow...", height=70, label_visibility="collapsed")
     st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
