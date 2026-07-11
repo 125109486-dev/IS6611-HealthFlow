@@ -1405,7 +1405,6 @@ elif page == "Contact":
         )
 
     # Footer
-    # Footer
     st.markdown(
         "<div style='background:#0D2137;border-radius:12px;padding:28px 24px;margin-top:24px'>"
         "<div style='display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem;margin-bottom:20px'>"
@@ -1417,9 +1416,9 @@ elif page == "Contact":
         "<div>"
         "<div style='font-size:15px;font-weight:700;color:white;margin-bottom:10px'>Quick Links</div>"
         "<div style='font-size:13px;color:#64748B;line-height:2'>"
-        "<a href='#' style='color:#64748B;text-decoration:none;display:block'>Find Your Nearest ED</a>"
-        "<a href='#' style='color:#64748B;text-decoration:none;display:block'>GP Services</a>"
-        "<a href='https://www.hse.ie' style='color:#64748B;text-decoration:none;display:block'>Health Information</a>"
+        "<a href='https://www.google.com/maps/search/emergency+department+near+me' target='_blank' style='color:#64748B;text-decoration:none;display:block'>Find Your Nearest ED</a>"
+        "<a href='https://www2.hse.ie/services/find-a-gp/' target='_blank' style='color:#64748B;text-decoration:none;display:block'>GP Services</a>"
+        "<a href='https://www.hse.ie/eng/health/' target='_blank' style='color:#64748B;text-decoration:none;display:block'>Health Information</a>"
         "</div></div>"
         "<div>"
         "<div style='font-size:15px;font-weight:700;color:white;margin-bottom:10px'>Emergency Contacts</div>"
