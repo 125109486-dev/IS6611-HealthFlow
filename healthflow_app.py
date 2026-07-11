@@ -293,10 +293,11 @@ def load_synthetic():
     return df
 
 @st.cache_data
+
 def load_gp():
     try:
         df = pd.read_csv(
-            "https://github.com/125109486-dev/IS6611-HealthFlow/blob/main/gp_out_of_hours.csv",
+            "https://raw.githubusercontent.com/125109486-dev/IS6611-HealthFlow/main/gp_out_of_hours.csv",
             encoding="latin-1", header=1
         )
         df = df[["Name","Address","Opening Hours","Day"]].dropna(subset=["Name"])
