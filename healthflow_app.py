@@ -208,7 +208,9 @@ HOSPITAL_MAP = {
 
 HOSPITAL_NEWS = {
     "Cork University Hospital": "https://cuhemergencymedicine.ie/news/",
-    # add more verified hospital-specific news pages here as you confirm them
+    "Mater Misericordiae University Hospital": "https://www.mater.ie/about/hospital-news/",
+    "St. Vincent's University Hospital": "https://www.stvincents.ie/news/",
+    "Beaumont Hospital": "https://www.beaumont.ie/pages/main-pages/latest-news" 
 }
 
 def get_news_url(hospital_name):
