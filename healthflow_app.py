@@ -767,6 +767,7 @@ if page == "ED Status":
         is_chi = "CHI" in hosp
         badge = "Children's" if is_chi else "Public"
         maps_url = GOOGLE_MAPS.get(hosp, f"https://maps.google.com/?q={hosp.replace(' ','+')}+Ireland")
+        news_url = get_news_url(hosp)
 
         forecast = forecast_occupancy_4h(hosp, occ)
         f_delta = forecast["predicted_4h"] - forecast["current_occ"]
