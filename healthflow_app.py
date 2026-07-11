@@ -96,9 +96,15 @@ st.markdown("""
     white-space:normal!important;
     display:flex!important;
 }
+.st-key-urgency_grid .stButton button div{
+    width:100%!important;
+    text-align:left!important;
+    align-items:flex-start!important;
+    justify-content:flex-start!important;
+}
 .st-key-urgency_grid .stButton button p{
     text-align:left!important;
-    width:100%;
+    width:100%!important;
     margin:0!important;
     line-height:1.5!important;
 }
