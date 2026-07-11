@@ -1402,7 +1402,7 @@ elif page == "Contact":
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
             <div style="background:#DC2626;width:52px;height:52px;border-radius:12px;
                         display:flex;align-items:center;justify-content:center;
-                        font-size:22px;flex-shrink:0;color:white">📞</div>
+                        font-size:22px;flex-shrink:0;color:white">☎</div>
             <div>
                 <div style="font-size:17px;font-weight:700;color:#0D2137;margin-bottom:6px">
                     10 Critical Symptoms Requiring Immediate Review
