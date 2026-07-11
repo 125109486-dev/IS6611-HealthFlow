@@ -966,24 +966,22 @@ elif page == "Resources":
 
     cols = st.columns(2)
     for i, (title, desc, note) in enumerate(pharmacy_conditions):
-        note_html = (f"<div style='margin-top:10px;background:#F0FDF4;border:1px solid #BBFDD8;"
+        note_html = (f"<div style='background:#F0FDF4;border:1px solid #BBFDD8;"
                      f"border-radius:20px;padding:4px 10px;font-size:12px;color:#16A34A;"
-                     f"display:inline-block'>{note}</div>") if note else ""
-                     
+                     f"white-space:nowrap;flex-shrink:0;margin-left:10px'>{note}</div>") if note else ""
         with cols[i % 2]:
             st.markdown(
                 f"<div style='background:white;border:1px solid #D1FAE5;border-radius:10px;"
-                f"padding:16px;margin-bottom:12px;min-height:100px;display:flex;"
-                f"flex-direction:column;justify-content:space-between'>"
-                f"<div>"
-                f"<div style='font-size:15px;font-weight:600;color:#0D2137;margin-bottom:6px'>{title}</div>"
-                f"<div style='font-size:13px;color:#64748B;line-height:1.5'>{desc}</div>"
-                f"</div>"
+                f"padding:16px;margin-bottom:12px;min-height:88px'>"
+                f"<div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px'>"
+                f"<div style='font-size:15px;font-weight:600;color:#0D2137'>{title}</div>"
                 f"{note_html}"
+                f"</div>"
+                f"<div style='font-size:13px;color:#64748B;line-height:1.5'>{desc}</div>"
                 f"</div>",
                 unsafe_allow_html=True
             )
-
+            
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
