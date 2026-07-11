@@ -615,17 +615,17 @@ elif page == "Patient Advice":
     st.markdown('<div style="font-size:15px;color:#64748B;margin-bottom:14px">Select the option that best describes your situation. We will show you the most appropriate care pathway.</div>', unsafe_allow_html=True)
 
     URGENCY_OPTIONS = [
-        ("Chest Pain or Breathing Difficulty", "Tightness, pressure, shortness of breath", "life", "#FFF1F2","#DC2626"),
-        ("Stroke Symptoms", "Face drooping, arm weakness, speech difficulty", "life", "#FFF1F2","#DC2626"),
-        ("Severe Injury or Uncontrolled Bleeding", "Major trauma, deep wound, broken bones", "life", "#FFF1F2","#DC2626"),
-        ("Collapsed, unconscious, or seizure", "Loss of consciousness, fitting", "life", "#FFF1F2","#DC2626"),
-        ("Severe Allergic Reaction", "Swelling of face, lips or throat, wheezing", "life", "#FFF1F2","#DC2626"),
-        ("Child Illness / High Fever", "Unwell child, persistent high temperature", "life", "#FFF1F2","#DC2626"),
-        ("Minor Injury", "Sprain, small cut, minor burn, possible fracture", "moderate", "#FFFBEB","#D97706"),
-        ("Stomach / Abdominal Pain", "Cramps, nausea, vomiting, indigestion", "moderate", "#FFFBEB","#D97706"),
-        ("Moderate Illness", "Skin infection, fever, moderate pain", "moderate", "#FFFBEB","#D97706"),
-        ("Minor — can wait or self-manage", "Cold sore, rash, UTI", "minor", "#F0FDF4","#16A34A"),
-        ("Not Sure / Something Else", "Something else / Not listed above", "minor", "#F8FAFC","#64748B"),
+        ("🔴Chest Pain or Breathing Difficulty", "Tightness, pressure, shortness of breath", "life", "#FFF1F2","#DC2626"),
+        ("🔴Stroke Symptoms", "Face drooping, arm weakness, speech difficulty", "life", "#FFF1F2","#DC2626"),
+        ("🔴Severe Injury or Uncontrolled Bleeding", "Major trauma, deep wound, broken bones", "life", "#FFF1F2","#DC2626"),
+        ("🔴Collapsed, unconscious, or seizure", "Loss of consciousness, fitting", "life", "#FFF1F2","#DC2626"),
+        ("🔴Severe Allergic Reaction", "Swelling of face, lips or throat, wheezing", "life", "#FFF1F2","#DC2626"),
+        ("🔴Child Illness / High Fever", "Unwell child, persistent high temperature", "life", "#FFF1F2","#DC2626"),
+        ("🟡Minor Injury", "Sprain, small cut, minor burn, possible fracture", "moderate", "#FFFBEB","#D97706"),
+        ("🟡Stomach / Abdominal Pain", "Cramps, nausea, vomiting, indigestion", "moderate", "#FFFBEB","#D97706"),
+        ("🟡Moderate Illness", "Skin infection, fever, moderate pain", "moderate", "#FFFBEB","#D97706"),
+        ("🟢Minor — can wait or self-manage", "Cold sore, rash, UTI", "minor", "#F0FDF4","#16A34A"),
+        ("🟢Not Sure / Something Else", "Something else / Not listed above", "minor", "#F8FAFC","#64748B"),
     ]
 
     if "sel_urgency" not in st.session_state:
