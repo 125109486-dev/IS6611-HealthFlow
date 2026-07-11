@@ -294,10 +294,21 @@ def load_synthetic():
 
 @st.cache_data
 def load_gp():
-    df = pd.read_csv(
-        "https://raw.githubusercontent.com/125109486-dev/IS6611-HealthFlow/refs/heads/main/gp_out_of_hours.csv",
-        encoding="latin-1", header=2
-    )
+    url = "https://raw.githubusercontent.com/125109486-dev/IS6611-HealthFlow/refs/heads/main/gp_out_of_hours.csv"
+
+    raw = pd.read_csv(url, encoding="utf-8-sig", header=None)
+    header_row_idx = None
+    for idx, row in raw.iterrows():
+        cleaned = row.astype(str).str.strip().str.replace("\ufeff", "", regex=False)
+        if cleaned.eq("Name").any():
+            header_row_idx = idx
+            break
+    if header_row_idx is None:
+        return pd.DataFrame()
+
+    df = pd.read_csv(url, encoding="utf-8-sig", header=header_row_idx)
+    df.columns = [str(c).strip().replace("\ufeff", "") for c in df.columns]
+
     df = df[["Name","Address","Opening Hours","Day"]].copy()
     df = df.dropna(how="all")
     df["Name"] = df["Name"].ffill()
