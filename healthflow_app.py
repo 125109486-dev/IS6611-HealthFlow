@@ -109,15 +109,6 @@ st.markdown("""
     line-height:1.5!important;
 }
 
-.st-key-urgency_grid .urg-marker{
-    height:0;
-    margin-bottom:-8px;
-}
-.st-key-urgency_grid .urg-marker + div .stButton button{
-    border-left:5px solid var(--urg-color)!important;
-    padding-left:20px!important;
-}
-
 /* Resources */
 .resource-card{background:white;border-radius:12px;padding:18px;
                border:1px solid #E2E8F0;margin-bottom:14px;}
@@ -634,7 +625,7 @@ elif page == "Patient Advice":
     # ── Two-column layout: options on the left, live recommendation on the right ──
     col_opts, col_rec = st.columns([3, 2], gap="large")
     
-        with col_opts:
+    with col_opts:
         with st.container(key="urgency_grid"):
             urg_cols = st.columns(2)
             for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
