@@ -615,9 +615,9 @@ elif page == "Patient Advice":
         ("🟡 Minor Injury", "Sprain, small cut, minor burn, possible fracture", "moderate", "#FFFBEB","#D97706"),
         ("🟡 Stomach / Abdominal Pain", "Cramps, nausea, vomiting, indigestion", "moderate", "#FFFBEB","#D97706"),
         ("🟡 Moderate Illness", "Skin infection, fever, moderate pain", "moderate", "#FFFBEB","#D97706"),
-        ("🟢 Ongoing / Worsening Condition", "Managing a known condition, medication review", "minor", "#F8FAFC","#64748B"),
+        ("🟢 Ongoing / Worsening Condition", "Managing a known condition, medication review", "minor", "#F0FDF4","#16A34A"),
         ("🟢 Minor — can wait or self-manage", "Cold sore, rash, UTI", "minor", "#F0FDF4","#16A34A"),
-        ("🟢 Not Sure / Something Else", "Something else / Not listed above", "minor", "#F8FAFC","#64748B")
+        ("🟢 Not Sure / Something Else", "Something else / Not listed above", "minor", "#F0FDF4","#16A34A")
     ]
 
     if "sel_urgency" not in st.session_state:
