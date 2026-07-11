@@ -536,7 +536,7 @@ if page == "ED Status":
     age_hospitals, age_note = get_hospitals_for_age(sel_county, sel_age)
 
     # Search
-    search = st.text_input("", placeholder="Search hospitals...", label_visibility="collapsed", border:black)
+    search = st.text_input("", placeholder="Search hospitals...", label_visibility="collapsed")
     if search:
         age_hospitals = [h for h in age_hospitals if search.lower() in h.lower()]
 
