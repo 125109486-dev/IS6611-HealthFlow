@@ -133,60 +133,60 @@ p, div, span, li{font-size:15px;line-height:1.7;}
 
 # ── Hospital map ──────────────────────────────────────────────────────────────
 HOSPITAL_MAP = {
-    "Dublin":      ["Mater Misericordiae University Hospital","St. James's Hospital",
+    "Dublin": ["Mater Misericordiae University Hospital","St. James's Hospital",
                     "St. Vincent's University Hospital","Beaumont Hospital",
                     "Tallaght University Hospital","Connolly Hospital Blanchardstown",
                     "Naas General Hospital","CHI at Temple Street","CHI at Crumlin","CHI at Tallaght"],
-    "Cork":        ["Cork University Hospital","Mercy University Hospital"],
-    "Kerry":       ["University Hospital Kerry"],
-    "Limerick":    ["University Hospital Limerick"],
-    "Galway":      ["Galway University Hospitals"],
-    "Mayo":        ["Mayo University Hospital"],
-    "Sligo":       ["Sligo University Hospital"],
-    "Donegal":     ["Letterkenny University Hospital"],
-    "Waterford":   ["UH Waterford"],
-    "Wexford":     ["Wexford General Hospital"],
-    "Kilkenny":    ["St Luke's General Hospital Kilkenny"],
-    "Tipperary":   ["Tipperary University Hospital"],
-    "Drogheda":    ["Our Lady of Lourdes Hospital"],
-    "Navan":       ["Our Lady's Hospital Navan"],
-    "Cavan":       ["Cavan General Hospital"],
-    "Portlaoise":  ["Midland Regional Hospital Portlaoise"],
-    "Tullamore":   ["Midland Regional Hospital Tullamore"],
-    "Mullingar":   ["Midland Regional Hospital Mullingar"],
+    "Cork": ["Cork University Hospital","Mercy University Hospital"],
+    "Kerry": ["University Hospital Kerry"],
+    "Limerick": ["University Hospital Limerick"],
+    "Galway": ["Galway University Hospitals"],
+    "Mayo": ["Mayo University Hospital"],
+    "Sligo": ["Sligo University Hospital"],
+    "Donegal": ["Letterkenny University Hospital"],
+    "Waterford": ["UH Waterford"],
+    "Wexford": ["Wexford General Hospital"],
+    "Kilkenny": ["St Luke's General Hospital Kilkenny"],
+    "Tipperary": ["Tipperary University Hospital"],
+    "Drogheda": ["Our Lady of Lourdes Hospital"],
+    "Navan": ["Our Lady's Hospital Navan"],
+    "Cavan": ["Cavan General Hospital"],
+    "Portlaoise": ["Midland Regional Hospital Portlaoise"],
+    "Tullamore": ["Midland Regional Hospital Tullamore"],
+    "Mullingar": ["Midland Regional Hospital Mullingar"],
     "Ballinasloe": ["Portiuncula University Hospital"],
 }
 
 GOOGLE_MAPS = {
     "Mater Misericordiae University Hospital": "https://maps.google.com/?q=Mater+Misericordiae+University+Hospital+Dublin",
-    "St. James's Hospital":                    "https://maps.google.com/?q=St+James+Hospital+Dublin",
-    "St. Vincent's University Hospital":       "https://maps.google.com/?q=St+Vincents+University+Hospital+Dublin",
-    "Beaumont Hospital":                        "https://maps.google.com/?q=Beaumont+Hospital+Dublin",
-    "Tallaght University Hospital":             "https://maps.google.com/?q=Tallaght+University+Hospital+Dublin",
-    "Connolly Hospital Blanchardstown":         "https://maps.google.com/?q=Connolly+Hospital+Blanchardstown",
-    "Naas General Hospital":                    "https://maps.google.com/?q=Naas+General+Hospital+Kildare",
-    "CHI at Temple Street":                     "https://maps.google.com/?q=Childrens+Health+Ireland+Temple+Street+Dublin",
-    "CHI at Crumlin":                           "https://maps.google.com/?q=Childrens+Health+Ireland+Crumlin+Dublin",
-    "CHI at Tallaght":                          "https://maps.google.com/?q=Childrens+Health+Ireland+Tallaght+Dublin",
-    "Cork University Hospital":                 "https://maps.google.com/?q=Cork+University+Hospital",
-    "Mercy University Hospital":                "https://maps.google.com/?q=Mercy+University+Hospital+Cork",
-    "University Hospital Kerry":                "https://maps.google.com/?q=University+Hospital+Kerry+Tralee",
-    "University Hospital Limerick":             "https://maps.google.com/?q=University+Hospital+Limerick",
-    "Galway University Hospitals":              "https://maps.google.com/?q=Galway+University+Hospital",
-    "Mayo University Hospital":                 "https://maps.google.com/?q=Mayo+University+Hospital+Castlebar",
-    "Sligo University Hospital":                "https://maps.google.com/?q=Sligo+University+Hospital",
-    "Letterkenny University Hospital":          "https://maps.google.com/?q=Letterkenny+University+Hospital+Donegal",
-    "UH Waterford":                             "https://maps.google.com/?q=University+Hospital+Waterford",
-    "Wexford General Hospital":                 "https://maps.google.com/?q=Wexford+General+Hospital",
-    "St Luke's General Hospital Kilkenny":      "https://maps.google.com/?q=St+Lukes+General+Hospital+Kilkenny",
-    "Tipperary University Hospital":            "https://maps.google.com/?q=Tipperary+University+Hospital+Clonmel",
-    "Our Lady of Lourdes Hospital":             "https://maps.google.com/?q=Our+Lady+of+Lourdes+Hospital+Drogheda",
-    "Our Lady's Hospital Navan":                "https://maps.google.com/?q=Our+Ladys+Hospital+Navan",
-    "Cavan General Hospital":                   "https://maps.google.com/?q=Cavan+General+Hospital",
-    "Midland Regional Hospital Portlaoise":     "https://maps.google.com/?q=Midland+Regional+Hospital+Portlaoise",
-    "Midland Regional Hospital Tullamore":      "https://maps.google.com/?q=Midland+Regional+Hospital+Tullamore",
-    "Midland Regional Hospital Mullingar":      "https://maps.google.com/?q=Midland+Regional+Hospital+Mullingar",
-    "Portiuncula University Hospital":          "https://maps.google.com/?q=Portiuncula+University+Hospital+Ballinasloe",
+    "St. James's Hospital": "https://maps.google.com/?q=St+James+Hospital+Dublin",
+    "St. Vincent's University Hospital": "https://maps.google.com/?q=St+Vincents+University+Hospital+Dublin",
+    "Beaumont Hospital": "https://maps.google.com/?q=Beaumont+Hospital+Dublin",
+    "Tallaght University Hospital": "https://maps.google.com/?q=Tallaght+University+Hospital+Dublin",
+    "Connolly Hospital Blanchardstown": "https://maps.google.com/?q=Connolly+Hospital+Blanchardstown",
+    "Naas General Hospital": "https://maps.google.com/?q=Naas+General+Hospital+Kildare",
+    "CHI at Temple Street": "https://maps.google.com/?q=Childrens+Health+Ireland+Temple+Street+Dublin",
+    "CHI at Crumlin": "https://maps.google.com/?q=Childrens+Health+Ireland+Crumlin+Dublin",
+    "CHI at Tallaght": "https://maps.google.com/?q=Childrens+Health+Ireland+Tallaght+Dublin",
+    "Cork University Hospital": "https://maps.google.com/?q=Cork+University+Hospital",
+    "Mercy University Hospital": "https://maps.google.com/?q=Mercy+University+Hospital+Cork",
+    "University Hospital Kerry": "https://maps.google.com/?q=University+Hospital+Kerry+Tralee",
+    "University Hospital Limerick": "https://maps.google.com/?q=University+Hospital+Limerick",
+    "Galway University Hospitals": "https://maps.google.com/?q=Galway+University+Hospital",
+    "Mayo University Hospital": "https://maps.google.com/?q=Mayo+University+Hospital+Castlebar",
+    "Sligo University Hospital": "https://maps.google.com/?q=Sligo+University+Hospital",
+    "Letterkenny University Hospital": "https://maps.google.com/?q=Letterkenny+University+Hospital+Donegal",
+    "UH Waterford": "https://maps.google.com/?q=University+Hospital+Waterford",
+    "Wexford General Hospital": "https://maps.google.com/?q=Wexford+General+Hospital",
+    "St Luke's General Hospital Kilkenny": "https://maps.google.com/?q=St+Lukes+General+Hospital+Kilkenny",
+    "Tipperary University Hospital": "https://maps.google.com/?q=Tipperary+University+Hospital+Clonmel",
+    "Our Lady of Lourdes Hospital": "https://maps.google.com/?q=Our+Lady+of+Lourdes+Hospital+Drogheda",
+    "Our Lady's Hospital Navan": "https://maps.google.com/?q=Our+Ladys+Hospital+Navan",
+    "Cavan General Hospital": "https://maps.google.com/?q=Cavan+General+Hospital",
+    "Midland Regional Hospital Portlaoise": "https://maps.google.com/?q=Midland+Regional+Hospital+Portlaoise",
+    "Midland Regional Hospital Tullamore": "https://maps.google.com/?q=Midland+Regional+Hospital+Tullamore",
+    "Midland Regional Hospital Mullingar": "https://maps.google.com/?q=Midland+Regional+Hospital+Mullingar",
+    "Portiuncula University Hospital": "https://maps.google.com/?q=Portiuncula+University+Hospital+Ballinasloe",
 }
 
 CM = {"Green":"#16A34A","Amber":"#D97706","Red":"#DC2626"}
@@ -195,12 +195,12 @@ def rag_meta(occ_or_status):
     """Accept either occupancy float or status string."""
     try:
         occ = float(occ_or_status)
-        if occ >= 8:   return "#DC2626","s-red","Very Busy"
-        if occ >= 4:   return "#D97706","s-amber","Busy"
+        if occ >= 8: return "#DC2626","s-red","Very Busy"
+        if occ >= 4: return "#D97706","s-amber","Busy"
         return "#16A34A","s-green","Normal"
     except (TypeError, ValueError):
         # Fallback if a status string is passed
-        if occ_or_status == "Red":   return "#DC2626","s-red","Very Busy"
+        if occ_or_status == "Red": return "#DC2626","s-red","Very Busy"
         if occ_or_status == "Amber": return "#D97706","s-amber","Busy"
         return "#16A34A","s-green","Normal"
 
@@ -321,7 +321,7 @@ red_c = int((latest_syn["derived_status"]=="Red").sum())
 amb_c = int((latest_syn["derived_status"]=="Amber").sum())
 grn_c = int((latest_syn["derived_status"]=="Green").sum())
 
-# ── Session state ─────────────────────────────────────────────────────────────
+#Session state 
 if "onboarded" not in st.session_state:
     st.session_state.onboarded = False
 if "page" not in st.session_state:
@@ -329,7 +329,7 @@ if "page" not in st.session_state:
 if "show_change" not in st.session_state:
     st.session_state.show_change = False
 
-# ── Landing page ──────────────────────────────────────────────────────────────
+#Landing page
 if not st.session_state.onboarded:
     st.markdown("""
     <div style="background:linear-gradient(135deg,#0D9488 0%,#0a7a70 60%,#0D2137 100%);
@@ -363,10 +363,10 @@ if not st.session_state.onboarded:
         age_land = st.selectbox("", age_opts, index=3, label_visibility="collapsed")
         st.markdown("<div style='height:6px'></div>", unsafe_allow_html=True)
         if st.button("Find My Care", type="primary", use_container_width=True):
-            st.session_state.onboarded      = True
+            st.session_state.onboarded = True
             st.session_state.landing_county = county_land
-            st.session_state.landing_age    = age_land
-            st.session_state.page           = "ED Status"
+            st.session_state.landing_age = age_land
+            st.session_state.page = "ED Status"
             st.rerun()
 
     st.markdown("""
@@ -376,7 +376,7 @@ if not st.session_state.onboarded:
     """, unsafe_allow_html=True)
     st.stop()
 
-# ── Top nav ───────────────────────────────────────────────────────────────────
+#Top nav 
 pages = ["ED Status", "Patient Advice", "Resources", "Contact"]
 
 col_logo, col_n1, col_n2, col_n3, col_n4, col_999 = st.columns([2,1,1.2,1,1,1.5])
@@ -390,13 +390,13 @@ with col_logo:
         </div>
     </div>""", unsafe_allow_html=True)
 with col_n1:
-    if st.button("ED Status",      use_container_width=True): st.session_state.page="ED Status";      st.rerun()
+    if st.button("ED Status", use_container_width=True): st.session_state.page="ED Status"; st.rerun()
 with col_n2:
     if st.button("Patient Advice", use_container_width=True): st.session_state.page="Patient Advice"; st.rerun()
 with col_n3:
-    if st.button("Resources",      use_container_width=True): st.session_state.page="Resources";      st.rerun()
+    if st.button("Resources", use_container_width=True): st.session_state.page="Resources"; st.rerun()
 with col_n4:
-    if st.button("Contact",        use_container_width=True): st.session_state.page="Contact";        st.rerun()
+    if st.button("Contact", use_container_width=True): st.session_state.page="Contact"; st.rerun()
 with col_999:
     pass
 with col_999:
