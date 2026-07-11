@@ -1007,7 +1007,7 @@ elif page == "Resources":
 
     st.divider()
 
-    # GP Out of Hours from data
+# GP Out of Hours from data
     st.markdown('<div class="sec-title">GP Out-of-Hours Services Near You</div>', unsafe_allow_html=True)
     res_county = st.session_state.get("landing_county", None)
     if not res_county:
@@ -1029,13 +1029,16 @@ elif page == "Resources":
 
     if not gp_df.empty:
         st.markdown('<div style="font-size:14px;color:#64748B;margin-bottom:8px">Showing all GP out-of-hours services — use the geographic guide above to find yours.</div>', unsafe_allow_html=True)
-        for _, row in gp_df.head(10).iterrows():
-            st.markdown(
-                "<div class='resource-card'><div class='resource-title'>" + str(row['name']) + "</div>"
-                "<div class='resource-desc'>" + str(row['address']) + "</div>"
-                "<div style='font-size:14px;color:#374151;'>" + str(row['hours']) + " · " + str(row['days']) + "</div></div>",
-                unsafe_allow_html=True
-            )
+        gp_rows = gp_df.head(9)
+        gcols = st.columns(3)
+        for i, (_, row) in enumerate(gp_rows.iterrows()):
+            with gcols[i % 3]:
+                st.markdown(
+                    "<div class='resource-card'><div class='resource-title'>" + str(row['name']) + "</div>"
+                    "<div class='resource-desc'>" + str(row['address']) + "</div>"
+                    "<div style='font-size:14px;color:#374151;'>" + str(row['hours']) + " · " + str(row['days']) + "</div></div>",
+                    unsafe_allow_html=True
+                )
     else:
         st.info("GP out-of-hours data is currently unavailable.")
 
