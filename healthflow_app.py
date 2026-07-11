@@ -42,9 +42,10 @@ st.markdown("""
 .nav-logo span{color:#0F766E ;}
 
 /* Hospital card */
-.hcard{background:FAFAF9;border-radius:12px;padding:20px;border:1px solid #E2E8F0;
+.hcard{background:white;border-radius:12px;padding:16px;border:1px solid #E2E8F0;
        box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:14px;position:relative;
-       width:100%;}
+       width:100%;aspect-ratio:1/1;display:flex;flex-direction:column;
+       justify-content:space-between;overflow:hidden;}
 .hcard-name{font-size:17px;font-weight:700;color:#0D2137;margin-bottom:4px;padding-right:24px;line-height:1.3;}
 .hcard-loc{font-size:14px;color:#64748B;margin-bottom:12px;}
 .tdot{width:14px;height:14px;border-radius:50%;position:absolute;top:20px;right:20px;flex-shrink:0;}
