@@ -593,7 +593,7 @@ elif page == "Patient Advice":
     with fcol1:
         lbl, inp = st.columns([1, 2])
         with lbl:
-            st.markdown("<div style='padding-top:10px;font-size:18px;font-weight:600;color:#374151'>County / City</div>", unsafe_allow_html=True)
+            st.markdown("<div style='padding-top:10px;font-size:16px;font-weight:600;color:#374151'>County / City</div>", unsafe_allow_html=True)
         with inp:
             county_idx = list(HOSPITAL_MAP.keys()).index(sel_county) if sel_county in HOSPITAL_MAP else 0
             county_pa = st.selectbox("", list(HOSPITAL_MAP.keys()), index=county_idx, key="pa_c", label_visibility="collapsed")
@@ -601,14 +601,14 @@ elif page == "Patient Advice":
     with fcol2:
         lbl, inp = st.columns([1, 2])
         with lbl:
-            st.markdown("<div style='padding-top:10px;font-size:18px;font-weight:600;color:#374151'>Nearest hospital</div>", unsafe_allow_html=True)
+            st.markdown("<div style='padding-top:10px;font-size:16px;font-weight:600;color:#374151'>Nearest hospital</div>", unsafe_allow_html=True)
         with inp:
             sel_hosp = st.selectbox("", HOSPITAL_MAP[county_pa], key="pa_h", label_visibility="collapsed")
 
     with fcol3:
         lbl, inp = st.columns([1, 2])
         with lbl:
-            st.markdown("<div style='padding-top:10px;font-size:18px;font-weight:600;color:#374151'>Patient age group</div>", unsafe_allow_html=True)
+            st.markdown("<div style='padding-top:10px;font-size:16px;font-weight:600;color:#374151'>Patient age group</div>", unsafe_allow_html=True)
         with inp:
             age_opt_list = ["Under 5 — Infant / Toddler","5–15 — Child",
                             "16–25 — Young Adult","26–64 — Adult","65+ — Senior"]
