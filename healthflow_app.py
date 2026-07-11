@@ -68,11 +68,24 @@ st.markdown("""
 .stat-lbl{color:#64748B;}.stat-val{font-weight:700;color:#0D2137;}
 .cap-bg{height:7px;background:#E2E8F0;border-radius:10px;overflow:hidden;margin:8px 0 10px;}
 .cap-fill{height:100%;border-radius:10px;}
+
+/* Get Directions */
 .maps-btn{display:block;margin-top:12px;background:#0D9488;color:#ffffff!important;
           text-align:center;padding:12px 16px;border-radius:8px;
           font-size:15px;font-weight:700;text-decoration:none;width:100%;}
 .maps-btn:visited{color:#ffffff!important;}
 
+/* News Button */
+.maps-btn-outline{display:block;margin-top:8px;background:white;color:#0D9488!important;
+                   text-align:center;padding:12px 16px;border-radius:8px;border:1px solid #0D9488;
+                   font-size:15px;font-weight:700;text-decoration:none;width:100%;}
+.maps-btn-outline:link,
+.maps-btn-outline:visited,
+.maps-btn-outline:hover,
+.maps-btn-outline:active{
+    color:#0D9488!important;
+    text-decoration:none;
+}
 
 /* Section */
 .sec-title{font-size:20px;font-weight:700;color:#0D2137;margin:1.4rem 0 1rem;}
@@ -796,8 +809,7 @@ if page == "ED Status":
                     {f_arrow} In 4h: {forecast['predicted_4h']:.1f}% ({f_word})
                 </div>
                 <a href="{maps_url}" target="_blank" class="maps-btn">Get Directions</a>
-                <a href="{news_url}" target="_blank" class="maps-btn"
-                   style="background:white;color:#0D9488!important;border:1px solid #0D9488;margin-top:8px">
+                <a href="{news_url}" target="_blank" class="maps-btn-outline">
                     Latest Hospital News
                 </a>
                 
