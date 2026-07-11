@@ -25,7 +25,7 @@ st.markdown("""
 .block-container{padding:0 1rem 2rem 1rem!important;max-width:100%!important;}
 
 /* Hero */
-.hero{background:linear-gradient(135deg,#0D9488 0%,#0a7a70 60%,#0D2137 100%);
+.hero{background:linear-gradient(135deg,#0F766E 0%,#0a7a70 60%,#0D2137 100%);
       padding:2rem 1.5rem;margin-bottom:1.5rem;}
 .hero-title{font-size:28px;font-weight:700;color:white;margin-bottom:8px;line-height:1.3;}
 .hero-sub{font-size:16px;color:rgba(255,255,255,0.88);margin-bottom:16px;line-height:1.6;}
@@ -39,7 +39,7 @@ st.markdown("""
          display:flex;align-items:center;gap:8px;overflow-x:auto;
          position:sticky;top:0;z-index:999;flex-wrap:wrap;}
 .nav-logo{font-size:17px;font-weight:700;color:#0D2137;white-space:nowrap;margin-right:12px;}
-.nav-logo span{color:#0D9488;}
+.nav-logo span{color:#0F766E ;}
 
 /* Hospital card */
 .hcard{background:white;border-radius:12px;padding:20px;border:1px solid #E2E8F0;
@@ -57,7 +57,7 @@ st.markdown("""
 .stat-lbl{color:#64748B;}.stat-val{font-weight:700;color:#0D2137;}
 .cap-bg{height:7px;background:#E2E8F0;border-radius:10px;overflow:hidden;margin:8px 0 10px;}
 .cap-fill{height:100%;border-radius:10px;}
-.maps-btn{display:block;margin-top:12px;background:#0D9488;color:#ffffff!important;
+.maps-btn{display:block;margin-top:12px;background:#0F766E ;color:#ffffff!important;
           text-align:center;padding:12px 16px;border-radius:8px;
           font-size:15px;font-weight:700;text-decoration:none;width:100%;}
 .maps-btn:visited{color:#ffffff!important;}
@@ -75,7 +75,7 @@ st.markdown("""
           border:1.5px solid #E2E8F0;margin-bottom:10px;}
 .update-card{background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;
              padding:18px;margin-bottom:14px;}
-.uvc-card{background:linear-gradient(135deg,#0D9488,#0f766e);
+.uvc-card{background:linear-gradient(135deg,#0F766E ,#0f766e);
           border-radius:12px;padding:18px;margin-bottom:14px;color:white;}
 .important-badge{background:#F59E0B;color:white;font-size:13px;font-weight:700;
                  padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:10px;}
@@ -116,7 +116,7 @@ st.markdown("""
                border:1px solid #E2E8F0;margin-bottom:14px;}
 .resource-title{font-size:17px;font-weight:700;color:#0D2137;margin-bottom:8px;}
 .resource-desc{font-size:15px;color:#64748B;line-height:1.6;margin-bottom:10px;}
-.resource-link{color:#0D9488;font-size:15px;font-weight:600;text-decoration:none;}
+.resource-link{color:#0F766E ;font-size:15px;font-weight:600;text-decoration:none;}
 
 /* Contact */
 .contact-card{background:white;border-radius:12px;padding:18px;
@@ -403,7 +403,7 @@ if "show_change" not in st.session_state:
 #Landing page
 if not st.session_state.onboarded:
     st.markdown("""
-    <div style="background:linear-gradient(135deg,#0D9488 0%,#0a7a70 60%,#0D2137 100%);
+    <div style="background:linear-gradient(135deg,#0F766E  0%,#0a7a70 60%,#0D2137 100%);
                 padding:3rem 1.5rem 2rem 1.5rem;text-align:center;">
         <div style="background:rgba(255,255,255,0.2);width:56px;height:56px;border-radius:14px;
                     display:flex;align-items:center;justify-content:center;
@@ -460,10 +460,10 @@ col_logo, col_n1, col_n2, col_n3, col_n4, col_999 = st.columns([2,1,1.2,1,1,1.5]
 with col_logo:
     st.markdown("""
     <div style="display:flex;align-items:center;gap:8px;padding:4px 0">
-        <div style="background:#0D9488;color:white;width:30px;height:30px;border-radius:8px;
+        <div style="background:#0F766E ;color:white;width:30px;height:30px;border-radius:8px;
                     display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">H</div>
         <div style="font-weight:700;color:#0D2137;font-size:14px;line-height:1.1">
-            Health<span style="color:#0D9488">Flow</span>
+            Health<span style="color:#0F766E ">Flow</span>
         </div>
     </div>""", unsafe_allow_html=True)
 with col_n1:
@@ -649,13 +649,13 @@ elif page == "Patient Advice":
     with col2:
         st.markdown("""
         <div class="ins-card">
-            <div style="font-weight:600;color:#0D9488;margin-bottom:4px">Public HSE Patient</div>
+            <div style="font-weight:600;color:#0F766E ;margin-bottom:4px">Public HSE Patient</div>
             <div style="font-size:14px;color:#6b7280">
                 A&E visits are free with a valid GP referral letter. No insurance required.
             </div>
         </div>""", unsafe_allow_html=True)
 
-    st.markdown('<div style="color:#0D9488;font-size:12px;font-weight:700;letter-spacing:0.06em;margin:16px 0 6px 0">STEP 2 OF 2</div>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#0F766E ;font-size:12px;font-weight:700;letter-spacing:0.06em;margin:16px 0 6px 0">STEP 2 OF 2</div>', unsafe_allow_html=True)
     st.markdown('<div style="font-size:18px;font-weight:700;color:#0D2137;margin-bottom:6px">Why are you considering attending A&E?</div>', unsafe_allow_html=True)
     st.markdown('<div style="font-size:15px;color:#64748B;margin-bottom:14px">Select the option that best describes your situation. We will show you the most appropriate care pathway.</div>', unsafe_allow_html=True)
 
@@ -666,7 +666,7 @@ elif page == "Patient Advice":
 
     sel_urg = st.session_state.sel_urgency
     urgency_type = "minor"
-    sel_bc  = "#0D9488"
+    sel_bc  = "#0F766E "
     sel_sub = ""
     for ti, sub, ut, bg, bc in URGENCY_OPTIONS:
         if ti == sel_urg:
@@ -678,7 +678,7 @@ elif page == "Patient Advice":
     col_opts, col_rec = st.columns([3, 2], gap="large")
 
     with col_opts:
-        st.markdown('<div style="color:#0D9488;font-size:12px;font-weight:700;letter-spacing:0.06em;margin:0 0 6px 0">YOUR ANSWER</div>', unsafe_allow_html=True)
+        st.markdown('<div style="color:#0F766E ;font-size:12px;font-weight:700;letter-spacing:0.06em;margin:0 0 6px 0">YOUR ANSWER</div>', unsafe_allow_html=True)
         st.markdown(
             "<div style='background:white;border-left:4px solid " + sel_bc + ";"
             "border-radius:8px;padding:14px 16px;border:1px solid #E2E8F0;margin-bottom:10px'>"
@@ -889,7 +889,7 @@ elif page == "Resources":
         ooh_html += (
             "<div style='background:#F8FAFC;border-radius:8px;padding:14px;margin-bottom:8px'>"
             "<div style='font-size:14px;color:#64748B;margin-bottom:6px'>" + name + "</div>"
-            "<a href='" + tel_link + "' style='font-size:16px;font-weight:700;color:#0D9488;text-decoration:none;display:block;margin-bottom:6px'>" + number + "</a>"
+            "<a href='" + tel_link + "' style='font-size:16px;font-weight:700;color:#0F766E ;text-decoration:none;display:block;margin-bottom:6px'>" + number + "</a>"
             "<a href='" + web_link + "' target='_blank' style='font-size:13px;color:#2563EB;text-decoration:none;font-weight:500'>Visit website</a>"
             "</div>"
         )
@@ -904,7 +904,7 @@ elif page == "Resources":
             "<div style='font-size:15px;color:#374151;line-height:1.7;margin-bottom:14px'>"
             "Your GP is your first point of contact for non-emergency medical issues. "
             "They can assess, treat, and refer you if needed.</div>"
-            "<div style='font-size:14px;color:#0D9488;margin-bottom:6px'>Mon-Fri: 9am – 5pm (typical)</div>"
+            "<div style='font-size:14px;color:#0F766E ;margin-bottom:6px'>Mon-Fri: 9am – 5pm (typical)</div>"
             "<div style='font-size:14px;color:#64748B;margin-bottom:14px'>Find your nearest GP practice</div>"
             "<a href='https://www.google.com/maps/search/GP+doctor+near+me' target='_blank'"
             " style='display:block;border:1px solid #E2E8F0;border-radius:8px;padding:10px;"
@@ -971,7 +971,7 @@ elif page == "Resources":
     st.markdown("""
     <div style="background:#F0FDF4;border-radius:12px;padding:20px;margin-bottom:16px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-            <span style="background:#0D9488;color:white;font-size:12px;font-weight:600;
+            <span style="background:#0F766E ;color:white;font-size:12px;font-weight:600;
                          padding:3px 10px;border-radius:4px">HSE Scheme</span>
         </div>
         <div style="font-size:15px;color:#374151;line-height:1.7;margin-bottom:12px">
@@ -1023,16 +1023,16 @@ elif page == "Resources":
     with col1:
         st.markdown("""
         <a href="https://www.hse.ie/eng/health/az/p/pharmacy-services/" target="_blank"
-           style="display:block;background:#0D9488;color:white;text-align:center;padding:14px;
+           style="display:block;background:#0F766E ;color:white;text-align:center;padding:14px;
                   border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;margin-top:8px">
             Find a Participating Pharmacy Near You
         </a>""", unsafe_allow_html=True)
     with col2:
         st.markdown("""
         <a href="https://www.hse.ie/eng/" target="_blank"
-           style="display:block;background:white;color:#0D9488;text-align:center;padding:14px;
+           style="display:block;background:white;color:#0F766E ;text-align:center;padding:14px;
                   border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;
-                  border:2px solid #0D9488;margin-top:8px">
+                  border:2px solid #0F766E ;margin-top:8px">
             Learn More on HSE.ie
         </a>""", unsafe_allow_html=True)
 
@@ -1052,7 +1052,7 @@ elif page == "Resources":
         )
     else:
         st.markdown(
-            f"<div style='background:#CCFBF1;border:1px solid #0D9488;border-radius:8px;"
+            f"<div style='background:#CCFBF1;border:1px solid #0F766E ;border-radius:8px;"
             f"padding:12px 16px;margin-bottom:1rem;font-size:15px;color:#0D2137;'>"
             f"Showing services for <strong>{res_county}</strong></div>",
             unsafe_allow_html=True
@@ -1075,7 +1075,7 @@ elif page == "Resources":
                 f"<div style='background:#FEF9C3;border:1px solid #FDE68A;border-radius:8px;"
                 f"padding:14px;font-size:15px;color:#374151;'>No GP out-of-hours service listed for <strong>{res_county}</strong>. "
                 f"See <a href='https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours' target='_blank' "
-                f"style='color:#0D9488;'>HSE GP Out-of-Hours directory</a> for the full national list.</div>",
+                f"style='color:#0F766E ;'>HSE GP Out-of-Hours directory</a> for the full national list.</div>",
                 unsafe_allow_html=True
             )
     elif not gp_df.empty:
@@ -1096,7 +1096,7 @@ elif page == "Resources":
                         f"<div class='resource-desc'>{row['address']}</div>"
                         f"<div style='font-size:14px;color:#374151;margin-bottom:3px;'>{row['hours']}</div>"
                         f"<div style='font-size:14px;color:#374151;margin-bottom:3px;'>{row['days']}</div>"
-                        f"<div style='font-size:14px;color:#0D9488;font-weight:600;'>Ages: {row['ages']}</div></div>",
+                        f"<div style='font-size:14px;color:#0F766E ;font-weight:600;'>Ages: {row['ages']}</div></div>",
                         unsafe_allow_html=True
                     )
         else:
@@ -1104,7 +1104,7 @@ elif page == "Resources":
                 f"<div style='background:#FEF9C3;border:1px solid #FDE68A;border-radius:8px;"
                 f"padding:14px;font-size:15px;color:#374151;'>No Minor Injury Unit in <strong>{res_county}</strong>. "
                 f"See <a href='https://www.hse.ie/eng/services/list/3/injuryunits/' target='_blank' "
-                f"style='color:#0D9488;'>HSE Injury Units</a> for the full national list.</div>",
+                f"style='color:#0F766E ;'>HSE Injury Units</a> for the full national list.</div>",
                 unsafe_allow_html=True
             )
     else:
@@ -1141,7 +1141,7 @@ elif page == "Resources":
     st.markdown('<div class="sec-title">Digital Resources</div>', unsafe_allow_html=True)
     dr_col1, dr_col2, dr_col3 = st.columns(3)
     digital = [
-        ("HSE Health App",       "Access health information and services on the go",   "Download", "https://www.hse.ie/eng/", "#0D9488"),
+        ("HSE Health App",       "Access health information and services on the go",   "Download", "https://www.hse.ie/eng/", "#0F766E "),
     ]
     for col, (title, desc, cta, link, colour) in zip([dr_col1, dr_col2, dr_col3], digital):
         with col:
@@ -1168,14 +1168,14 @@ elif page == "Resources":
         <div style="background:white;border-radius:12px;padding:20px;border:1px solid #E2E8F0">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
                 <div style="background:#CCFBF1;width:40px;height:40px;border-radius:8px;
-                            display:flex;align-items:center;justify-content:center;color:#0D9488;font-size:18px;flex-shrink:0">T</div>
+                            display:flex;align-items:center;justify-content:center;color:#0F766E ;font-size:18px;flex-shrink:0">T</div>
                 <div style="font-size:17px;font-weight:700;color:#0D2137">HSE Live</div>
             </div>
             <div style="font-size:14px;color:#374151;margin-bottom:12px">
                 Get information about health services and entitlements
             </div>
             <div style="background:#F8FAFC;border-radius:8px;padding:12px">
-                <a href="tel:1850241850" style="font-size:16px;font-weight:700;color:#0D9488;text-decoration:none;display:block;margin-bottom:4px">1850 24 1850</a>
+                <a href="tel:1850241850" style="font-size:16px;font-weight:700;color:#0F766E ;text-decoration:none;display:block;margin-bottom:4px">1850 24 1850</a>
                 <div style="font-size:13px;color:#64748B">Mon-Fri: 8am – 8pm</div>
             </div>
         </div>""", unsafe_allow_html=True)
@@ -1184,7 +1184,7 @@ elif page == "Resources":
         <div style="background:white;border-radius:12px;padding:20px;border:1px solid #E2E8F0">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
                 <div style="background:#CCFBF1;width:40px;height:40px;border-radius:8px;
-                            display:flex;align-items:center;justify-content:center;color:#0D9488;font-size:18px;flex-shrink:0">i</div>
+                            display:flex;align-items:center;justify-content:center;color:#0F766E ;font-size:18px;flex-shrink:0">i</div>
                 <div style="font-size:17px;font-weight:700;color:#0D2137">HSE.ie</div>
             </div>
             <div style="font-size:14px;color:#374151;margin-bottom:12px">
@@ -1422,13 +1422,13 @@ elif page == "Contact":
     with col2:
         st.markdown(
             "<div style='background:#F0FDFA;border:1px solid #99F6E4;border-radius:12px;padding:20px;height:100%'>"
-            "<div style='font-size:15px;font-weight:700;color:#0D9488;margin-bottom:12px'>" + ooh_name + "</div>"
+            "<div style='font-size:15px;font-weight:700;color:#0F766E ;margin-bottom:12px'>" + ooh_name + "</div>"
             "<div style='font-size:13px;color:#0F766E;line-height:1.6;margin-bottom:16px'>"
             "When your GP surgery is closed, out-of-hours services provide urgent medical care.</div>"
             "<a href='" + ooh_tel + "' style='display:block;font-size:16px;font-weight:700;"
-            "color:#0D9488;text-decoration:none;margin-bottom:10px'>📞 " + ooh_num + "</a>"
+            "color:#0F766E ;text-decoration:none;margin-bottom:10px'>📞 " + ooh_num + "</a>"
             "<a href='" + ooh_web + "' target='_blank'"
-            " style='display:block;background:#0D9488;color:white;text-align:center;"
+            " style='display:block;background:#0F766E ;color:white;text-align:center;"
             "padding:10px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none'>"
             "Visit Website</a>"
             "</div>",
