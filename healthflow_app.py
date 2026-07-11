@@ -88,14 +88,23 @@ st.markdown("""
 
 .st-key-urgency_grid .stButton button{
     justify-content:flex-start!important;
+    align-items:flex-start!important;
     text-align:left!important;
+    min-height:76px!important;
     height:auto!important;
     padding:14px 16px!important;
     white-space:normal!important;
+    display:flex!important;
 }
 .st-key-urgency_grid .stButton button p{
     text-align:left!important;
     width:100%;
+    margin:0!important;
+    line-height:1.5!important;
+}
+.st-key-urgency_grid .stButton button[kind="primary"],
+.st-key-urgency_grid .stButton button[kind="secondary"]{
+    min-height:76px!important;
 }
 
 /* Resources */
