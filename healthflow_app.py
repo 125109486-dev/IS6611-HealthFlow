@@ -109,6 +109,15 @@ st.markdown("""
     line-height:1.5!important;
 }
 
+.st-key-urgency_grid .urg-marker{
+    height:0;
+    margin-bottom:-8px;
+}
+.st-key-urgency_grid .urg-marker + div .stButton button{
+    border-left:5px solid var(--urg-color)!important;
+    padding-left:20px!important;
+}
+
 /* Resources */
 .resource-card{background:white;border-radius:12px;padding:18px;
                border:1px solid #E2E8F0;margin-bottom:14px;}
@@ -626,20 +635,25 @@ elif page == "Patient Advice":
     col_opts, col_rec = st.columns([3, 2], gap="large")
     
     with col_opts:
-        with st.container(key="urgency_grid"):
-            urg_cols = st.columns(2)
-            for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
-                is_sel = (st.session_state.sel_urgency == ti)
-                with urg_cols[idx % 2]:
-                    if st.button(
-                        ti + "  \n" + sub,
-                        key="urg_" + str(idx),
-                        use_container_width=True,
-                        type="primary" if is_sel else "secondary"
-                    ):
-                        st.session_state.sel_urgency = ti
-                        st.rerun()
-
+    with st.container(key="urgency_grid"):
+        urg_cols = st.columns(2)
+        for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
+            is_sel = (st.session_state.sel_urgency == ti)
+            dot_color = "#DC2626" if ut == "life" else ("#D97706" if ut == "moderate" else "#16A34A")
+            with urg_cols[idx % 2]:
+                st.markdown(
+                    f"<div class='urg-marker' style='--urg-color:{dot_color}'></div>",
+                    unsafe_allow_html=True
+                )
+                if st.button(
+                    ti + "  \n" + sub,
+                    key="urg_" + str(idx),
+                    use_container_width=True,
+                    type="primary" if is_sel else "secondary"
+                ):
+                    st.session_state.sel_urgency = ti
+                    st.rerun()
+                    
     sel_urg = st.session_state.sel_urgency
     urgency_type = "minor"
     sel_bc  = "#0D9488"
