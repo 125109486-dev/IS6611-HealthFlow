@@ -838,7 +838,7 @@ elif page == "Resources":
     elif res_county in ["Galway", "Mayo", "Roscommon"]:
         ooh_services = [("Westdoc (West)", "0818 360 000", "tel:0818360000", "https://www.westdoc.ie/")]
     elif res_county == "Donegal":
-        ooh_services = [("NowDoc (Donegal)", "0818 400 911", "tel:0818400911", "https://www.northdoc.ie/")]
+        ooh_services = [("NowDoc (Donegal)", "0818 400 911", "tel:0818400911", "https://www2.hse.ie/services/find-urgent-emergency-care/nowdoc-mountcharles/")]
     elif res_county in ["Cavan", "Monaghan", "Louth", "Meath"]:
         ooh_services = [("NEDOC (North East)", "1800 777 911", "tel:1800777911", "https://www.nedoc.ie")]
     elif res_county in ["Dublin", "Kildare"]:
@@ -1335,21 +1335,30 @@ elif page == "Contact":
     </div>
     """, unsafe_allow_html=True)
 
-    # GP / Out of Hours / Minor Injury cards
+   # GP / Out of Hours / Minor Injury cards
     # Geo-based out of hours
     contact_county = st.session_state.get("landing_county", "")
-    if contact_county in ["Dublin", "Kildare", "Wicklow", "Meath", "Louth"]:
-        ooh_name, ooh_num, ooh_tel, ooh_web = "NowDoc (Dublin & Leinster)", "1850 592 0900", "tel:18505920900", "https://www.nowdoc.ie"
-    elif contact_county in ["Cork", "Kerry"]:
-        ooh_name, ooh_num, ooh_tel, ooh_web = "SouthDoc (Cork & Kerry)", "0818 355 999", "tel:0818355999", "https://www.southdoc.ie"
-    elif contact_county in ["Limerick", "Tipperary", "Clare", "Galway", "Mayo", "Roscommon", "Sligo", "Leitrim"]:
-        ooh_name, ooh_num, ooh_tel, ooh_web = "ShanDoc (Shannon & West)", "1850 777 911", "tel:1850777911", "https://www.shandoc.ie"
-    elif contact_county in ["Donegal", "Cavan", "Monaghan"]:
-        ooh_name, ooh_num, ooh_tel, ooh_web = "NorthDoc (North West)", "0818 000 003", "tel:0818000003", "https://www.northdoc.ie"
-    elif contact_county in ["Waterford", "Wexford", "Kilkenny", "Carlow"]:
-        ooh_name, ooh_num, ooh_tel, ooh_web = "Caredoc (South East)", "0818 300 365", "tel:0818300365", "https://www.caredoc.ie"
+    if contact_county in ["Cork", "Kerry"]:
+        ooh_name, ooh_num, ooh_tel, ooh_web = "SouthDoc (Cork & Kerry)", "0818 355 999", "tel:0818355999", "https://www.southdoc.ie/"
+    elif contact_county in ["Waterford", "Wexford", "Kilkenny", "Carlow", "Tipperary", "Wicklow"]:
+        ooh_name, ooh_num, ooh_tel, ooh_web = "Caredoc (South East)", "0818 300 365", "tel:0818300365", "https://www.caredoc.ie/"
+    elif contact_county in ["Limerick", "Clare"]:
+        ooh_name, ooh_num, ooh_tel, ooh_web = "Shannondoc (Mid-West)", "0818 123 500", "tel:0818123500", "https://www.shannondoc.ie/"
+    elif contact_county in ["Laois", "Longford", "Offaly", "Westmeath"]:
+        ooh_name, ooh_num, ooh_tel, ooh_web = "MIDOC (Midlands)", "1800 302 702", "tel:1800302702", "https://midoctlm.ie/"
+    elif contact_county in ["Galway", "Mayo", "Roscommon"]:
+        ooh_name, ooh_num, ooh_tel, ooh_web = "Westdoc (West)", "0818 360 000", "tel:0818360000", "https://www.westdoc.ie/"
+    elif contact_county == "Donegal":
+        ooh_name, ooh_num, ooh_tel, ooh_web = "NowDoc (Donegal)", "0818 400 911", "tel:0818400911", "https://www2.hse.ie/services/find-urgent-emergency-care/nowdoc-mountcharles/"
+    elif contact_county in ["Cavan", "Monaghan", "Louth", "Meath"]:
+        ooh_name, ooh_num, ooh_tel, ooh_web = "NEDOC (North East)", "1800 777 911", "tel:1800777911", "https://www.nedoc.ie/"
+    elif contact_county in ["Dublin", "Kildare"]:
+        ooh_name, ooh_num, ooh_tel, ooh_web = "Find your local Dublin/Kildare service", "Search HSE directory", "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours", "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours"
+    elif contact_county in ["Sligo", "Leitrim"]:
+        ooh_name, ooh_num, ooh_tel, ooh_web = "Caredoc (Sligo/Leitrim extension)", "0818 365 399", "tel:0818365399", "https://www.caredoc.ie/"
     else:
-        ooh_name, ooh_num, ooh_tel, ooh_web = "Out-of-Hours GP", "1850 777 911", "tel:1850777911", "https://www.hse.ie/eng/services/list/3/primarycare/outofhours.html"
+        ooh_name, ooh_num, ooh_tel, ooh_web = "GP Out-of-Hours (national)", "Search HSE directory", "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours", "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours"
+        
 
     col1, col2, col3 = st.columns(3)
     with col1:
