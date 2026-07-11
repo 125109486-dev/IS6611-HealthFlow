@@ -194,7 +194,7 @@ HOSPITAL_MAP = {
 }
 
 HOSPITAL_NEWS = {
-    "Cork University Hospital": "https://www.cuh.hse.ie/about-us/about-us/news-events/",
+    "Cork University Hospital": "https://cuhemergencymedicine.ie/news/",
     # add more verified hospital-specific news pages here as you confirm them
 }
 
