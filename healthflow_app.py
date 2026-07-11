@@ -533,7 +533,7 @@ if page == "ED Status":
                 <div class="stat-row"><span class="stat-lbl">Daily Trolleys</span><span class="stat-val">{troll}</span></div>
                 <div class="stat-row"><span class="stat-lbl">BIS</span><span class="stat-val">{bis:.1f}</span></div>
                 <div class="cap-bg"><div class="cap-fill" style="width:{cap_pct}%;background:{cap_col}"></div></div>
-                <a href="{maps_url}" target="_blank" class="maps-btn">Get Directions</a>
+                <a href="{maps_url}" target="_blank" class="maps-btn" style="font-color: #ffffff":>Get Directions</a>
             </div>
             """, unsafe_allow_html=True)
 
