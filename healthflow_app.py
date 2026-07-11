@@ -858,7 +858,7 @@ elif page == "Patient Advice":
         "<a href='tel:999' style='background:#DC2626;color:white;padding:6px 14px;"
         "border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;margin-right:10px'>"
         "CALL 999 IMMEDIATELY</a>"
-        "<span style='font-size:15px;color:#64748B'>Call emergency services right away</span>"
+        "<span style='font-size:18px;color:#64748B'>Call emergency services right away</span>"
         "</div></div>"
         "<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px'>"
         + symptoms_html +
