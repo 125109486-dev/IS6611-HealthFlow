@@ -968,7 +968,7 @@ elif page == "Patient Advice":
 
     forecast = forecast_occupancy_4h(sel_hosp, occ)
 
-        delta = forecast["predicted_4h"] - forecast["current_occ"]
+    delta = forecast["predicted_4h"] - forecast["current_occ"]
         if delta > 1:
             trend_word, trend_color, trend_arrow = "Rising", "#DC2626", "↑"
         elif delta < -1:
