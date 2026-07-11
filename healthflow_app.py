@@ -628,10 +628,10 @@ elif page == "Patient Advice":
             urg_cols = st.columns(2)
             for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
                 is_sel = (st.session_state.sel_urgency == ti)
-                dot = "🔴" if ut == "life" else ("🟡" if ut == "moderate" else "🟢")
+                dot_color = "#DC2626" if ut == "life" else ("#D97706" if ut == "moderate" else "#16A34A")
                 with urg_cols[idx % 2]:
                     if st.button(
-                        dot + "  **" + ti + "**  \n" + sub,
+                        ti + "  \n" + sub,
                         key="urg_" + str(idx),
                         use_container_width=True,
                         type="primary" if is_sel else "secondary"
