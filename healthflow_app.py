@@ -1,4 +1,5 @@
 import streamlit as st
+from statsmodels.tsa.statespace.sarimax import SARIMAX
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -398,6 +399,58 @@ latest_syn["derived_status"] = latest_syn["occupancy_rate_pct"].apply(occ_to_sta
 red_c = int((latest_syn["derived_status"]=="Red").sum())
 amb_c = int((latest_syn["derived_status"]=="Amber").sum())
 grn_c = int((latest_syn["derived_status"]=="Green").sum())
+
+@st.cache_data(show_spinner=False)
+def forecast_occupancy_4h(hospital_name):
+    """
+    Fits a SARIMAX model on this hospital's occupancy history and forecasts 4 hours ahead.
+    Returns (forecast_df or None, current_occ, predicted_occ_4h, step_minutes)
+    """
+    hist = synthetic[synthetic["Hospital"].str.lower().str.contains(
+        hospital_name.lower().split()[0], na=False)].copy()
+    hist = hist.sort_values("date").drop_duplicates(subset="date")
+    hist = hist.dropna(subset=["occupancy_rate_pct"])
+
+    if len(hist) < 6:
+        current = float(hist["occupancy_rate_pct"].iloc[-1]) if len(hist) else 5.0
+        return None, current, current, None
+
+    # Work out how far apart readings actually are, so "4 hours ahead" means
+    # the right number of forecast steps regardless of the data's granularity
+    deltas = hist["date"].diff().dropna()
+    step_minutes = deltas.median().total_seconds() / 60 if len(deltas) else 60
+    if step_minutes <= 0:
+        step_minutes = 60
+    steps_for_4h = max(1, round(240 / step_minutes))
+
+    series = hist.set_index("date")["occupancy_rate_pct"]
+
+    try:
+        model = SARIMAX(series, order=(1, 1, 1), seasonal_order=(0, 0, 0, 0),
+                         enforce_stationarity=False, enforce_invertibility=False)
+        fit = model.fit(disp=False)
+        result = fit.get_forecast(steps=steps_for_4h)
+        pred_mean = result.predicted_mean.clip(lower=0, upper=100)
+        pred_ci = result.conf_int(alpha=0.2).clip(lower=0, upper=100)
+
+        forecast_df = pd.DataFrame({
+            "date": pred_mean.index,
+            "occupancy_rate_pct": pred_mean.values,
+            "lower": pred_ci.iloc[:, 0].values,
+            "upper": pred_ci.iloc[:, 1].values,
+        })
+        current_occ = float(series.iloc[-1])
+        predicted_occ_4h = float(pred_mean.iloc[-1])
+        return forecast_df, current_occ, predicted_occ_4h, step_minutes
+
+    except Exception:
+        # Fallback if SARIMAX can't converge on this hospital's data:
+        # simple recent-trend extrapolation instead of crashing
+        current_occ = float(series.iloc[-1])
+        lookback = min(6, len(series))
+        trend_per_step = (series.iloc[-1] - series.iloc[-lookback]) / max(lookback - 1, 1)
+        predicted_occ_4h = float(np.clip(current_occ + trend_per_step * steps_for_4h, 0, 100))
+        return None, current_occ, predicted_occ_4h, step_minutes
 
 #Session state 
 if "onboarded" not in st.session_state:
@@ -814,6 +867,64 @@ elif page == "Patient Advice":
         </div>
         """, unsafe_allow_html=True)
 
+        forecast_df, current_occ, predicted_occ_4h, step_min = forecast_occupancy_4h(sel_hosp)
+
+        delta = predicted_occ_4h - current_occ
+        if delta > 1:
+            trend_word, trend_color, trend_arrow = "Rising", "#DC2626", "↑"
+        elif delta < -1:
+            trend_word, trend_color, trend_arrow = "Falling", "#16A34A", "↓"
+        else:
+            trend_word, trend_color, trend_arrow = "Stable", "#64748B", "→"
+
+        st.markdown(f"""
+        <div class="rec-card" style="margin-top:14px">
+            <div style="color:#0D9488;font-size:12px;font-weight:700;letter-spacing:0.05em;margin-bottom:10px">
+                4-HOUR OCCUPANCY FORECAST
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div>
+                    <div style="font-size:12px;color:#94A3B8">Right now</div>
+                    <div style="font-size:24px;font-weight:700;color:#0D2137">{current_occ:.1f}%</div>
+                </div>
+                <div style="font-size:20px;color:{trend_color}">{trend_arrow}</div>
+                <div style="text-align:right">
+                    <div style="font-size:12px;color:#94A3B8">In 4 hours</div>
+                    <div style="font-size:24px;font-weight:700;color:{trend_color}">{predicted_occ_4h:.1f}%</div>
+                </div>
+            </div>
+            <div style="font-size:13px;color:{trend_color};font-weight:600">{trend_word} trend</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if forecast_df is not None:
+            hist_recent = synthetic[synthetic["Hospital"].str.lower().str.contains(
+                sel_hosp.lower().split()[0], na=False)].sort_values("date").tail(12)
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(
+                x=hist_recent["date"], y=hist_recent["occupancy_rate_pct"],
+                mode="lines+markers", name="History",
+                line=dict(color="#0D9488", width=2)
+            ))
+            fig.add_trace(go.Scatter(
+                x=forecast_df["date"], y=forecast_df["occupancy_rate_pct"],
+                mode="lines+markers", name="Forecast",
+                line=dict(color="#DC2626", width=2, dash="dash")
+            ))
+            fig.add_trace(go.Scatter(
+                x=pd.concat([forecast_df["date"], forecast_df["date"][::-1]]),
+                y=pd.concat([forecast_df["upper"], forecast_df["lower"][::-1]]),
+                fill="toself", fillcolor="rgba(220,38,38,0.1)",
+                line=dict(color="rgba(0,0,0,0)"), showlegend=False, hoverinfo="skip"
+            ))
+            fig.update_layout(
+                height=220, margin=dict(l=10, r=10, t=10, b=10),
+                showlegend=True, legend=dict(orientation="h", y=1.15),
+                yaxis_title="Occupancy %", plot_bgcolor="white"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        
         if urgency_type == "life":
             st.error("Call 999 immediately. Do not drive yourself to hospital.")
         elif status == "Red":
