@@ -44,24 +44,17 @@ st.markdown("""
 /* Hospital card */
 .hcard{background:white;border-radius:12px;padding:16px;border:1px solid #E2E8F0;
        box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:14px;position:relative;
-       width:100%;aspect-ratio:1/1;display:flex;flex-direction:column;
-       justify-content:space-between;overflow:hidden;}
-.hcard-name{font-size:17px;font-weight:700;color:#0D2137;margin-bottom:4px;padding-right:24px;line-height:1.3;}
-.hcard-loc{font-size:14px;color:#64748B;margin-bottom:12px;}
-.tdot{width:14px;height:14px;border-radius:50%;position:absolute;top:20px;right:20px;flex-shrink:0;}
-.sbadge{display:block;padding:8px 12px;border-radius:6px;font-size:15px;
-        font-weight:700;text-align:center;margin-bottom:12px;}
-.s-red{background:#FEE2E2;color:#DC2626;}
-.s-amber{background:#FEF9C3;color:#B45309;}
-.s-green{background:#DCFCE7;color:#15803D;}
-.stat-row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:6px;}
-.stat-lbl{color:#64748B;}.stat-val{font-weight:700;color:#0D2137;}
-.cap-bg{height:7px;background:#E2E8F0;border-radius:10px;overflow:hidden;margin:8px 0 10px;}
-.cap-fill{height:100%;border-radius:10px;}
-.maps-btn{display:block;margin-top:12px;background:#0F766E ;color:#ffffff!important;
-          text-align:center;padding:12px 16px;border-radius:8px;
-          font-size:15px;font-weight:700;text-decoration:none;width:100%;}
-.maps-btn:visited{color:#ffffff!important;}
+       width:100%;}
+.hcard-name{font-size:16px;font-weight:700;color:#0D2137;margin-bottom:2px;padding-right:24px;line-height:1.2;}
+.hcard-loc{font-size:13px;color:#64748B;margin-bottom:8px;}
+.tdot{width:12px;height:12px;border-radius:50%;position:absolute;top:16px;right:16px;flex-shrink:0;}
+.sbadge{display:block;padding:6px 10px;border-radius:6px;font-size:13px;
+        font-weight:700;text-align:center;margin-bottom:8px;}
+.stat-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px;}
+.cap-bg{height:5px;background:#E2E8F0;border-radius:10px;overflow:hidden;margin:6px 0 8px;}
+.maps-btn{display:block;margin-top:8px;background:#0D9488;color:#ffffff!important;
+          text-align:center;padding:9px 14px;border-radius:8px;
+          font-size:13px;font-weight:700;text-decoration:none;width:100%;}
 
 
 /* Section */
