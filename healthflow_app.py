@@ -21,6 +21,11 @@ st.markdown("""
 #MainMenu,footer,header{visibility:hidden;}
 [data-testid="collapsedControl"]{display:none;}
 
+/* Search Bar */
+.stTextInput input {
+    border: 1px solid black !important;
+    border-radius: 6px !important;
+
 /* Mobile-first responsive */
 .block-container{padding:0 1rem 2rem 1rem!important;max-width:100%!important;}
 
