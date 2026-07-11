@@ -413,7 +413,7 @@ if "fb_q5" not in st.session_state:
 
 @st.dialog("Patient Feedback Survey", width="large")
 def feedback_survey():
-    st.markdown('<div style="font-size:14px;color:#64748B;margin-bottom:16px">Help us improve HealthFlow — this takes less than a minute. All responses are anonymous.</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:16px;color:#64748B;margin-bottom:16px">Help us improve HealthFlow — this takes less than a minute. All responses are anonymous.</div>', unsafe_allow_html=True)
     st.markdown('<div style="font-size:15px;font-weight:700;color:#0D2137;margin-bottom:8px">About your condition</div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
