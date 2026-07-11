@@ -795,6 +795,11 @@ if page == "ED Status":
                     {f_arrow} In 4h: {forecast['predicted_4h']:.1f}% ({f_word})
                 </div>
                 <a href="{maps_url}" target="_blank" class="maps-btn">Get Directions</a>
+                <a href="{news_url}" target="_blank" class="maps-btn"
+                   style="background:white;color:#0D9488!important;border:1px solid #0D9488;margin-top:8px">
+                    Latest Hospital News
+                </a>
+                
             </div>
             """, unsafe_allow_html=True)
 
