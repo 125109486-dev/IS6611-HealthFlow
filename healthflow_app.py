@@ -180,6 +180,21 @@ HOSPITAL_MAP = {
     "Ballinasloe": ["Portiuncula University Hospital"],
 }
 
+URGENCY_OPTIONS = [
+        ("🔴 Chest Pain or Breathing Difficulty", "Tightness, pressure, shortness of breath", "life", "#FFF1F2","#DC2626"),
+        ("🔴 Stroke Symptoms", "Face drooping, arm weakness, speech difficulty", "life", "#FFF1F2","#DC2626"),
+        ("🔴 Severe Injury or Uncontrolled Bleeding", "Major trauma, deep wound, broken bones", "life", "#FFF1F2","#DC2626"),
+        ("🔴 Collapsed, unconscious, or seizure", "Loss of consciousness, fitting", "life", "#FFF1F2","#DC2626"),
+        ("🔴 Severe Allergic Reaction", "Swelling of face, lips or throat, wheezing", "life", "#FFF1F2","#DC2626"),
+        ("🔴 Child Illness / High Fever", "Unwell child, persistent high temperature", "life", "#FFF1F2","#DC2626"),
+        ("🟡 Minor Injury", "Sprain, small cut, minor burn, possible fracture", "moderate", "#FFFBEB","#D97706"),
+        ("🟡 Stomach / Abdominal Pain", "Cramps, nausea, vomiting, indigestion", "moderate", "#FFFBEB","#D97706"),
+        ("🟡 Moderate Illness", "Skin infection, fever, moderate pain", "moderate", "#FFFBEB","#D97706"),
+        ("🟢 Ongoing / Worsening Condition", "Managing a known condition, medication review", "minor", "#F0FDF4","#16A34A"),
+        ("🟢 Minor — can wait or self-manage", "Cold sore, rash, UTI", "minor", "#F0FDF4","#16A34A"),
+        ("🟢 Not Sure / Something Else", "Something else / Not listed above", "minor", "#F0FDF4","#16A34A")
+    ]
+
 GOOGLE_MAPS = {
     "Mater Misericordiae University Hospital": "https://maps.google.com/?q=Mater+Misericordiae+University+Hospital+Dublin",
     "St. James's Hospital": "https://maps.google.com/?q=St+James+Hospital+Dublin",
@@ -380,6 +395,7 @@ if not st.session_state.onboarded:
     with col2:
         st.markdown("<div style='font-size:20px;font-weight:600;color:#0D2137;margin-bottom:6px'>Which county are you in?</div>", unsafe_allow_html=True)
         county_land = st.selectbox("", list(HOSPITAL_MAP.keys()), label_visibility="collapsed")
+        
         age_opts = ["Under 5 — Infant / Toddler","5–15 — Child",
                     "16–25 — Young Adult","26–64 — Adult","65+ — Senior"]
         st.markdown("<div style='font-size:20px;font-weight:600;color:#0D2137;margin-bottom:6px'>What is the patient's age group?</div>", unsafe_allow_html=True)
@@ -610,47 +626,11 @@ elif page == "Patient Advice":
     st.markdown('<div style="font-size:18px;font-weight:700;color:#0D2137;margin-bottom:6px">Why are you considering attending A&E?</div>', unsafe_allow_html=True)
     st.markdown('<div style="font-size:15px;color:#64748B;margin-bottom:14px">Select the option that best describes your situation. We will show you the most appropriate care pathway.</div>', unsafe_allow_html=True)
 
-    URGENCY_OPTIONS = [
-        ("🔴 Chest Pain or Breathing Difficulty", "Tightness, pressure, shortness of breath", "life", "#FFF1F2","#DC2626"),
-        ("🔴 Stroke Symptoms", "Face drooping, arm weakness, speech difficulty", "life", "#FFF1F2","#DC2626"),
-        ("🔴 Severe Injury or Uncontrolled Bleeding", "Major trauma, deep wound, broken bones", "life", "#FFF1F2","#DC2626"),
-        ("🔴 Collapsed, unconscious, or seizure", "Loss of consciousness, fitting", "life", "#FFF1F2","#DC2626"),
-        ("🔴 Severe Allergic Reaction", "Swelling of face, lips or throat, wheezing", "life", "#FFF1F2","#DC2626"),
-        ("🔴 Child Illness / High Fever", "Unwell child, persistent high temperature", "life", "#FFF1F2","#DC2626"),
-        ("🟡 Minor Injury", "Sprain, small cut, minor burn, possible fracture", "moderate", "#FFFBEB","#D97706"),
-        ("🟡 Stomach / Abdominal Pain", "Cramps, nausea, vomiting, indigestion", "moderate", "#FFFBEB","#D97706"),
-        ("🟡 Moderate Illness", "Skin infection, fever, moderate pain", "moderate", "#FFFBEB","#D97706"),
-        ("🟢 Ongoing / Worsening Condition", "Managing a known condition, medication review", "minor", "#F0FDF4","#16A34A"),
-        ("🟢 Minor — can wait or self-manage", "Cold sore, rash, UTI", "minor", "#F0FDF4","#16A34A"),
-        ("🟢 Not Sure / Something Else", "Something else / Not listed above", "minor", "#F0FDF4","#16A34A")
-    ]
-
     if "sel_urgency" not in st.session_state:
         st.session_state.sel_urgency = URGENCY_OPTIONS[0][0]
+    if "show_urgency_change" not in st.session_state:
+        st.session_state.show_urgency_change = False
 
-    # ── Two-column layout: options on the left, live recommendation on the right ──
-    col_opts, col_rec = st.columns([3, 2], gap="large")
-    
-    with col_opts:
-        with st.container(key="urgency_grid"):
-            urg_cols = st.columns(2)
-            for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
-                is_sel = (st.session_state.sel_urgency == ti)
-                dot_color = "#DC2626" if ut == "life" else ("#D97706" if ut == "moderate" else "#16A34A")
-                with urg_cols[idx % 2]:
-                    st.markdown(
-                        f"<div class='urg-marker' style='--urg-color:{dot_color}'></div>",
-                        unsafe_allow_html=True
-                    )
-                    if st.button(
-                        ti + "  \n" + sub,
-                        key="urg_" + str(idx),
-                        use_container_width=True,
-                        type="primary" if is_sel else "secondary"
-                    ):
-                        st.session_state.sel_urgency = ti
-                        st.rerun()
-                        
     sel_urg = st.session_state.sel_urgency
     urgency_type = "minor"
     sel_bc  = "#0D9488"
@@ -662,19 +642,41 @@ elif page == "Patient Advice":
             sel_sub = sub
             break
 
+    col_opts, col_rec = st.columns([3, 2], gap="large")
+
+    with col_opts:
+        st.markdown('<div style="color:#0D9488;font-size:12px;font-weight:700;letter-spacing:0.06em;margin:0 0 6px 0">YOUR ANSWER</div>', unsafe_allow_html=True)
+        st.markdown(
+            "<div style='background:white;border-left:4px solid " + sel_bc + ";"
+            "border-radius:8px;padding:14px 16px;border:1px solid #E2E8F0;margin-bottom:10px'>"
+            "<strong style='color:" + sel_bc + ";font-size:16px'>" + sel_urg + "</strong><br>"
+            "<span style='font-size:14px;color:#64748B'>" + sel_sub + "</span></div>",
+            unsafe_allow_html=True
+        )
+        if st.button("Change your answer", use_container_width=False):
+            st.session_state.show_urgency_change = not st.session_state.show_urgency_change
+
+        if st.session_state.show_urgency_change:
+            with st.container(key="urgency_grid"):
+                urg_cols = st.columns(2)
+                for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
+                    is_sel = (st.session_state.sel_urgency == ti)
+                    with urg_cols[idx % 2]:
+                        if st.button(
+                            ti + "  \n" + sub,
+                            key="urg_" + str(idx),
+                            use_container_width=True,
+                            type="primary" if is_sel else "secondary"
+                        ):
+                            st.session_state.sel_urgency = ti
+                            st.session_state.show_urgency_change = False
+                            st.rerun()
+
     occ, status, troll, bis = get_hosp_data(sel_hosp)
     rc, sc, rl = rag_meta(occ)
     pathway, path_c, path_desc = get_pathway(occ, urgency_type)
 
     with col_rec:
-        st.markdown(
-            "<div style='background:white;border-left:4px solid " + sel_bc + ";"
-            "border-radius:8px;padding:12px 16px;margin-bottom:14px;border:1px solid #E2E8F0'>"
-            "<strong style='color:" + sel_bc + ";font-size:15px'>" + sel_urg + "</strong><br>"
-            "<span style='font-size:13px;color:#64748B'>" + sel_sub + "</span></div>",
-            unsafe_allow_html=True
-        )
-
         st.markdown(f"""
         <div class="rec-card" style="border-left:5px solid {path_c};margin-top:0;position:sticky;top:80px">
             <div style="color:{path_c};font-size:12px;font-weight:700;margin-bottom:6px;letter-spacing:0.05em">
