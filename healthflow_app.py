@@ -583,38 +583,40 @@ elif page == "Patient Advice":
     st.markdown('<div style="font-size:15px;color:#64748B;margin-bottom:14px">Select the option that best describes your situation. We will show you the most appropriate care pathway.</div>', unsafe_allow_html=True)
 
     URGENCY_OPTIONS = [
-        ("Chest Pain or Breathing Difficulty",     "Tightness, pressure, shortness of breath",        "life",     "#FFF1F2","#DC2626"),
-        ("Stroke Symptoms",                        "Face drooping, arm weakness, speech difficulty",   "life",     "#FFF1F2","#DC2626"),
-        ("Severe Injury or Uncontrolled Bleeding", "Major trauma, deep wound, broken bones",           "life",     "#FFF1F2","#DC2626"),
-        ("Collapsed, unconscious, or seizure",     "Loss of consciousness, fitting",                   "life",     "#FFF1F2","#DC2626"),
-        ("Severe Allergic Reaction",               "Swelling of face, lips or throat, wheezing",       "life",     "#FFF1F2","#DC2626"),
-        ("Minor Injury",                           "Sprain, small cut, minor burn, possible fracture", "moderate", "#FFFBEB","#D97706"),
-        ("Stomach / Abdominal Pain",               "Cramps, nausea, vomiting, indigestion",            "moderate", "#FFFBEB","#D97706"),
-        ("Moderate Illness",                       "Skin infection, fever, moderate pain",             "moderate", "#FFFBEB","#D97706"),
-        ("Minor — can wait or self-manage",        "Cold sore, rash, UTI",                             "minor",    "#F0FDF4","#16A34A"),
-        ("Child Illness / High Fever",             "Unwell child, persistent high temperature",        "life",     "#FFF1F2","#DC2626"),
-        ("Not Sure / Something Else",              "Something else / Not listed above",                "minor",    "#F8FAFC","#64748B"),
+        ("Chest Pain or Breathing Difficulty", "Tightness, pressure, shortness of breath", "life", "#FFF1F2","#DC2626"),
+        ("Stroke Symptoms", "Face drooping, arm weakness, speech difficulty", "life", "#FFF1F2","#DC2626"),
+        ("Severe Injury or Uncontrolled Bleeding", "Major trauma, deep wound, broken bones", "life", "#FFF1F2","#DC2626"),
+        ("Collapsed, unconscious, or seizure", "Loss of consciousness, fitting", "life",     "#FFF1F2","#DC2626"),
+        ("Severe Allergic Reaction", "Swelling of face, lips or throat, wheezing", "life", "#FFF1F2","#DC2626"),
+        ("Minor Injury", "Sprain, small cut, minor burn, possible fracture", "moderate", "#FFFBEB","#D97706"),
+        ("Stomach / Abdominal Pain", "Cramps, nausea, vomiting, indigestion", "moderate", "#FFFBEB","#D97706"),
+        ("Moderate Illness", "Skin infection, fever, moderate pain", "moderate", "#FFFBEB","#D97706"),
+        ("Minor — can wait or self-manage", "Cold sore, rash, UTI", "minor", "#F0FDF4","#16A34A"),
+        ("Child Illness / High Fever", "Unwell child, persistent high temperature", "life", "#FFF1F2","#DC2626"),
+        ("Not Sure / Something Else", "Something else / Not listed above", "minor", "#F8FAFC","#64748B"),
     ]
 
     if "sel_urgency" not in st.session_state:
         st.session_state.sel_urgency = URGENCY_OPTIONS[0][0]
 
-    urg_cols = st.columns(2)
-    for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
-        is_sel      = (st.session_state.sel_urgency == ti)
-        dot         = "🔴" if ut == "life" else ("🟡" if ut == "moderate" else "🟢")
-        card_bg     = bg if is_sel else "white"
-        card_border = bc if is_sel else "#E2E8F0"
-        card_weight = "700" if is_sel else "500"
-        with urg_cols[idx % 2]:
-            if st.button(
-                dot + "  " + ti + "\n" + sub,
-                key="urg_" + str(idx),
-                use_container_width=True,
-                type="primary" if is_sel else "secondary"
-            ):
-                st.session_state.sel_urgency = ti
-                st.rerun()
+    # ── Two-column layout: options on the left, live recommendation on the right ──
+    col_opts, col_rec = st.columns([3, 2], gap="large")
+
+    with col_opts:
+        with st.container(key="urgency_grid"):
+            urg_cols = st.columns(2)
+            for idx, (ti, sub, ut, bg, bc) in enumerate(URGENCY_OPTIONS):
+                is_sel = (st.session_state.sel_urgency == ti)
+                dot = "🔴" if ut == "life" else ("🟡" if ut == "moderate" else "🟢")
+                with urg_cols[idx % 2]:
+                    if st.button(
+                        dot + "  **" + ti + "**  \n" + sub,
+                        key="urg_" + str(idx),
+                        use_container_width=True,
+                        type="primary" if is_sel else "secondary"
+                    ):
+                        st.session_state.sel_urgency = ti
+                        st.rerun()
 
     sel_urg = st.session_state.sel_urgency
     urgency_type = "minor"
@@ -627,43 +629,44 @@ elif page == "Patient Advice":
             sel_sub = sub
             break
 
-    st.markdown(
-        "<div style='background:white;border-left:4px solid " + sel_bc + ";"
-        "border-radius:8px;padding:12px 16px;margin:8px 0 16px 0;border:1px solid #E2E8F0'>"
-        "<strong style='color:" + sel_bc + ";font-size:15px'>" + sel_urg + "</strong><br>"
-        "<span style='font-size:13px;color:#64748B'>" + sel_sub + "</span></div>",
-        unsafe_allow_html=True
-    )
-
     occ, status, troll, bis = get_hosp_data(sel_hosp)
     rc, sc, rl = rag_meta(occ)
     pathway, path_c, path_desc = get_pathway(occ, urgency_type)
 
-    st.markdown(f"""
-    <div class="rec-card" style="border-left:5px solid {path_c}">
-        <div style="color:{path_c};font-size:12px;font-weight:700;margin-bottom:6px;letter-spacing:0.05em">
-            RECOMMENDED CARE PATHWAY
-        </div>
-        <div style="font-size:20px;font-weight:700;color:{path_c}">{pathway}</div>
-        <div style="font-size:15px;color:#374151;margin-top:10px;line-height:1.7">{path_desc}</div>
-        <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;font-size:13px;color:#94A3B8">
-            {sel_hosp} &nbsp;|&nbsp;
-            Status: <strong style="color:{rc}">{rl}</strong> &nbsp;|&nbsp;
-            Occupancy: <strong>{occ:.1f}%</strong>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    with col_rec:
+        st.markdown(
+            "<div style='background:white;border-left:4px solid " + sel_bc + ";"
+            "border-radius:8px;padding:12px 16px;margin-bottom:14px;border:1px solid #E2E8F0'>"
+            "<strong style='color:" + sel_bc + ";font-size:15px'>" + sel_urg + "</strong><br>"
+            "<span style='font-size:13px;color:#64748B'>" + sel_sub + "</span></div>",
+            unsafe_allow_html=True
+        )
 
-    if urgency_type == "life":
-        st.error("Call 999 immediately. Do not drive yourself to hospital.")
-    elif status == "Red":
-        st.warning(f"{sel_hosp} is very busy. Consider an alternative if your condition allows.")
-        alt = [h for h in HOSPITAL_MAP.get(county_pa,[]) if h != sel_hosp]
-        for h in alt[:2]:
-            o2,s2,_,_ = get_hosp_data(h)
-            _,_,rl2 = rag_meta(s2)
-            st.markdown(f"- **{h}** — {rl2}")
+        st.markdown(f"""
+        <div class="rec-card" style="border-left:5px solid {path_c};margin-top:0;position:sticky;top:80px">
+            <div style="color:{path_c};font-size:12px;font-weight:700;margin-bottom:6px;letter-spacing:0.05em">
+                RECOMMENDED CARE PATHWAY
+            </div>
+            <div style="font-size:20px;font-weight:700;color:{path_c}">{pathway}</div>
+            <div style="font-size:15px;color:#374151;margin-top:10px;line-height:1.7">{path_desc}</div>
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;font-size:13px;color:#94A3B8">
+                {sel_hosp} &nbsp;|&nbsp;
+                Status: <strong style="color:{rc}">{rl}</strong> &nbsp;|&nbsp;
+                Occupancy: <strong>{occ:.1f}%</strong>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
+        if urgency_type == "life":
+            st.error("Call 999 immediately. Do not drive yourself to hospital.")
+        elif status == "Red":
+            st.warning(f"{sel_hosp} is very busy. Consider an alternative if your condition allows.")
+            alt = [h for h in HOSPITAL_MAP.get(county_pa,[]) if h != sel_hosp]
+            for h in alt[:2]:
+                o2,s2,_,_ = get_hosp_data(h)
+                _,_,rl2 = rag_meta(s2)
+                st.markdown(f"- **{h}** — {rl2}")
+                
     symptoms = [
         (1,  "Chest pain or chest tightness",            "Especially if crushing, radiating, or associated with sweating or nausea"),
         (2,  "Sudden shortness of breath",               "Could indicate respiratory failure, pulmonary embolism, or cardiac issues"),
