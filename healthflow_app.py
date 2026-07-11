@@ -542,7 +542,7 @@ if page == "ED Status":
 
     st.markdown(f"<div style='color:#64748B;font-size:12px;margin-bottom:10px'>Showing <strong>{len(age_hospitals)}</strong> hospitals</div>", unsafe_allow_html=True)
 
-    cols = st.columns(2)
+    cols = st.columns(3)
     for i, hosp in enumerate(age_hospitals):
         occ, status, troll, bis = get_hosp_data(hosp)
         rc, sc, rl = rag_meta(occ)
@@ -552,13 +552,13 @@ if page == "ED Status":
         is_chi  = "CHI" in hosp
         badge   = "Children's" if is_chi else "Public"
         maps_url = GOOGLE_MAPS.get(hosp, f"https://maps.google.com/?q={hosp.replace(' ','+')}+Ireland")
-        with cols[i % 2]:
+        with cols[i % 3]:
             st.markdown(f"""
             <div class="hcard">
                 <div class="tdot" style="background:{dot_col}"></div>
                 <div class="hcard-name">{hosp}</div>
                 <div class="hcard-loc">{sel_county} &nbsp;
-                    <span style="background:#EFF6FF;color:#0E7490;font-size:10px;font-weight:600;
+                    <span style="background:#EFF6FF;color:#2563EB;font-size:10px;font-weight:600;
                                  padding:2px 6px;border-radius:4px">{badge}</span>
                 </div>
                 <span class="sbadge {sc}">{rl}</span>
