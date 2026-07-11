@@ -637,23 +637,40 @@ elif page == "Patient Advice":
     # Personalised recommendation
     st.markdown('<div class="sec-title">Get Your Personalised Recommendation</div>', unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        county_idx = list(HOSPITAL_MAP.keys()).index(sel_county) if sel_county in HOSPITAL_MAP else 0
-        county_pa  = st.selectbox("County / City", list(HOSPITAL_MAP.keys()), index=county_idx, key="pa_c")
-        sel_hosp   = st.selectbox("Nearest hospital", HOSPITAL_MAP[county_pa], key="pa_h")
-        age_opt_list = ["Under 5 — Infant / Toddler","5–15 — Child",
-                        "16–25 — Young Adult","26–64 — Adult","65+ — Senior"]
-        age_idx    = age_opt_list.index(sel_age) if sel_age in age_opt_list else 3
-        patient_age = st.selectbox("Patient age group", age_opt_list, index=age_idx, key="pa_age")
-    with col2:
-        st.markdown("""
-        <div class="ins-card">
-            <div style="font-weight:600;color:#0F766E ;margin-bottom:4px">Public HSE Patient</div>
-            <div style="font-size:14px;color:#6b7280">
-                A&E visits are free with a valid GP referral letter. No insurance required.
-            </div>
-        </div>""", unsafe_allow_html=True)
+    fcol1, fcol2, fcol3 = st.columns(3)
+
+    with fcol1:
+        lbl, inp = st.columns([1, 2])
+        with lbl:
+            st.markdown("<div style='padding-top:10px;font-size:14px;font-weight:600;color:#374151'>County / City</div>", unsafe_allow_html=True)
+        with inp:
+            county_idx = list(HOSPITAL_MAP.keys()).index(sel_county) if sel_county in HOSPITAL_MAP else 0
+            county_pa = st.selectbox("", list(HOSPITAL_MAP.keys()), index=county_idx, key="pa_c", label_visibility="collapsed")
+
+    with fcol2:
+        lbl, inp = st.columns([1, 2])
+        with lbl:
+            st.markdown("<div style='padding-top:10px;font-size:14px;font-weight:600;color:#374151'>Nearest hospital</div>", unsafe_allow_html=True)
+        with inp:
+            sel_hosp = st.selectbox("", HOSPITAL_MAP[county_pa], key="pa_h", label_visibility="collapsed")
+
+    with fcol3:
+        lbl, inp = st.columns([1, 2])
+        with lbl:
+            st.markdown("<div style='padding-top:10px;font-size:14px;font-weight:600;color:#374151'>Patient age group</div>", unsafe_allow_html=True)
+        with inp:
+            age_opt_list = ["Under 5 — Infant / Toddler","5–15 — Child",
+                            "16–25 — Young Adult","26–64 — Adult","65+ — Senior"]
+            age_idx = age_opt_list.index(sel_age) if sel_age in age_opt_list else 3
+            patient_age = st.selectbox("", age_opt_list, index=age_idx, key="pa_age", label_visibility="collapsed")
+
+    st.markdown("""
+    <div class="ins-card" style="margin-top:12px">
+        <div style="font-weight:600;color:#0D9488;margin-bottom:4px">Public HSE Patient</div>
+        <div style="font-size:14px;color:#6b7280">
+            A&E visits are free with a valid GP referral letter. No insurance required.
+        </div>
+    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div style="color:#0F766E ;font-size:12px;font-weight:700;letter-spacing:0.06em;margin:16px 0 6px 0">STEP 2 OF 2</div>', unsafe_allow_html=True)
     st.markdown('<div style="font-size:18px;font-weight:700;color:#0D2137;margin-bottom:6px">Why are you considering attending A&E?</div>', unsafe_allow_html=True)
