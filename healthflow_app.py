@@ -193,6 +193,18 @@ HOSPITAL_MAP = {
     "Ballinasloe": ["Portiuncula University Hospital"],
 }
 
+HOSPITAL_NEWS = {
+    "Cork University Hospital": "https://www.cuh.hse.ie/about-us/about-us/news-events/",
+    # add more verified hospital-specific news pages here as you confirm them
+}
+
+def get_news_url(hospital_name):
+    if hospital_name in HOSPITAL_NEWS:
+        return HOSPITAL_NEWS[hospital_name]
+    # Fallback: a live Google News search filtered to this hospital
+    query = f"{hospital_name} Ireland hospital".replace(" ", "+")
+    return f"https://news.google.com/search?q={query}&hl=en-IE&gl=IE"
+
 URGENCY_OPTIONS = [
         ("🔴 Chest Pain or Breathing Difficulty", "Tightness, pressure, shortness of breath", "life", "#FFF1F2","#DC2626"),
         ("🔴 Stroke Symptoms", "Face drooping, arm weakness, speech difficulty", "life", "#FFF1F2","#DC2626"),
