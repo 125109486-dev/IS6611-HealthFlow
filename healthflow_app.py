@@ -384,6 +384,11 @@ if not st.session_state.onboarded:
                     "16–25 — Young Adult","26–64 — Adult","65+ — Senior"]
         st.markdown("<div style='font-size:20px;font-weight:600;color:#0D2137;margin-bottom:6px'>What is the patient's age group?</div>", unsafe_allow_html=True)
         age_land = st.selectbox("", age_opts, index=3, label_visibility="collapsed")
+
+        st.markdown("<div style='font-size:20px;font-weight:600;color:#0D2137;margin-bottom:6px'>Why might you be considering A&E?</div>", unsafe_allow_html=True)
+        urgency_titles = [o[0] for o in URGENCY_OPTIONS]
+        urgency_land = st.selectbox("", urgency_titles, label_visibility="collapsed")
+        
         st.markdown("<div style='height:6px'></div>", unsafe_allow_html=True)
         if st.button("Find My Care", type="primary", use_container_width=True):
             st.session_state.onboarded = True
