@@ -294,15 +294,42 @@ def load_synthetic():
 
 @st.cache_data
 
+@st.cache_data
 def load_gp():
     try:
-        df = pd.read_csv("https://raw.githubusercontent.com/125109486-dev/Health-Flow-Datasets-Code/refs/heads/main/gp_out_of_hours.csv", encoding="latin-1", header=1)
-        df = df[["Name","Address","Opening Hours","Day"]].dropna(subset=["Name"])
-        df.columns = ["name","address","hours","days"]
-        return df
+        df = pd.read_csv(
+            "https://raw.githubusercontent.com/125109486-dev/IS6611-HealthFlow/refs/heads/main/gp_out_of_hours.csv",
+            encoding="latin-1", header=1
+        )
+        df = df[["Name","Address","Opening Hours","Day"]]
+        df = df.dropna(how="all")
+        df["Name"] = df["Name"].ffill()
+        df["Address"] = df["Address"].ffill()
+        df = df.dropna(subset=["Name"])
+
+        # Fix mis-decoded apostrophes
+        for col in ["Name", "Address"]:
+            df[col] = (df[col].astype(str)
+                       .str.replace("â€™", "'", regex=False)
+                       .str.replace("Â", "", regex=False)
+                       .str.replace("â€“", "-", regex=False))
+
+        def get_county(addr):
+            if pd.isna(addr):
+                return ""
+            parts = [p.strip() for p in str(addr).split(",")]
+            return parts[-2] if len(parts) >= 2 else ""
+
+        df["County"] = df["Address"].apply(get_county)
+
+        grouped = df.groupby(["Name","Address","County"], sort=False).apply(
+            lambda g: "; ".join(f"{row['Opening Hours']} ({row['Day'].strip()})" for _, row in g.iterrows())
+        ).reset_index(name="Hours")
+
+        grouped.columns = ["name","address","county","hours"]
+        return grouped
     except Exception:
         return pd.DataFrame()
-
 @st.cache_data
 def load_miu():
     try:
@@ -1025,18 +1052,28 @@ elif page == "Resources":
             unsafe_allow_html=True
         )
 
-    if not gp_df.empty:
-        st.markdown('<div style="font-size:14px;color:#64748B;margin-bottom:8px">Showing all GP out-of-hours services — use the geographic guide above to find yours.</div>', unsafe_allow_html=True)
-        gp_rows = gp_df.head(9)
-        gcols = st.columns(3)
-        for i, (_, row) in enumerate(gp_rows.iterrows()):
-            with gcols[i % 3]:
-                st.markdown(
-                    "<div class='resource-card'><div class='resource-title'>" + str(row['name']) + "</div>"
-                    "<div class='resource-desc'>" + str(row['address']) + "</div>"
-                    "<div style='font-size:14px;color:#374151;'>" + str(row['hours']) + " · " + str(row['days']) + "</div></div>",
-                    unsafe_allow_html=True
-                )
+    if not gp_df.empty and res_county:
+        county_gp = gp_df[gp_df["county"].str.strip().str.lower() == res_county.strip().lower()]
+        if len(county_gp) > 0:
+            gcols = st.columns(3)
+            for i, (_, row) in enumerate(county_gp.iterrows()):
+                with gcols[i % 3]:
+                    st.markdown(
+                        "<div class='resource-card'><div class='resource-title'>" + str(row['name']) + "</div>"
+                        "<div class='resource-desc'>" + str(row['address']) + "</div>"
+                        "<div style='font-size:14px;color:#374151;'>" + str(row['hours']) + "</div></div>",
+                        unsafe_allow_html=True
+                    )
+        else:
+            st.markdown(
+                f"<div style='background:#FEF9C3;border:1px solid #FDE68A;border-radius:8px;"
+                f"padding:14px;font-size:15px;color:#374151;'>No GP out-of-hours service listed for <strong>{res_county}</strong>. "
+                f"See <a href='https://www2.hse.ie/services/find-urgent-emergency-care/?kind=GP+Out+of+Hours' target='_blank' "
+                f"style='color:#0D9488;'>HSE GP Out-of-Hours directory</a> for the full national list.</div>",
+                unsafe_allow_html=True
+            )
+    elif not gp_df.empty:
+        st.info("Select your county above to see local out-of-hours GP services.")
     else:
         st.info("GP out-of-hours data is currently unavailable.")
 
