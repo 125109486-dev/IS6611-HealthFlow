@@ -477,11 +477,59 @@ def forecast_occupancy_4h(hospital_name, current_occ):
         "has_sarimax": sarimax_result is not None,
     }
 
+@st.dialog("4-Hour Occupancy Forecast", width="large")
+def show_forecast_dialog(hospital_name, current_occ):
+    forecast = forecast_occupancy_4h(hospital_name, current_occ)
+    delta = forecast["predicted_4h"] - forecast["current_occ"]
+    if delta > 1:
+        trend_word, trend_color, trend_arrow = "Rising", "#DC2626", "↑"
+    elif delta < -1:
+        trend_word, trend_color, trend_arrow = "Falling", "#16A34A", "↓"
+    else:
+        trend_word, trend_color, trend_arrow = "Stable", "#64748B", "→"
+
+    st.markdown(f"<div style='font-size:16px;font-weight:700;color:#0D2137;margin-bottom:12px'>{hospital_name}</div>", unsafe_allow_html=True)
+
+    st.markdown(f"""
+    <div class="rec-card" style="margin-top:0">
+        <div style="color:#0D9488;font-size:12px;font-weight:700;letter-spacing:0.05em;margin-bottom:10px">
+            ESTIMATED OCCUPANCY — NEXT 4 HOURS
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div>
+                <div style="font-size:12px;color:#94A3B8">Right now</div>
+                <div style="font-size:24px;font-weight:700;color:#0D2137">{forecast['current_occ']:.1f}%</div>
+            </div>
+            <div style="font-size:20px;color:{trend_color}">{trend_arrow}</div>
+            <div style="text-align:right">
+                <div style="font-size:12px;color:#94A3B8">In ~4 hours</div>
+                <div style="font-size:24px;font-weight:700;color:{trend_color}">{forecast['predicted_4h']:.1f}%</div>
+            </div>
+        </div>
+        <div style="font-size:13px;color:{trend_color};font-weight:600;margin-bottom:6px">{trend_word} trend</div>
+        <div style="font-size:11px;color:#94A3B8;line-height:1.5">
+            Estimate range: {forecast['pred_lower']:.1f}%–{forecast['pred_upper']:.1f}%. Based on a SARIMAX day-ahead
+            trend model combined with a typical intraday occupancy pattern.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=forecast["curve_df"]["time"], y=forecast["curve_df"]["occupancy_rate_pct"],
+        mode="lines+markers", name="Estimated occupancy",
+        line=dict(color=trend_color, width=2)
+    ))
+    fig.update_layout(
+        height=260, margin=dict(l=10, r=10, t=10, b=10),
+        showlegend=False, yaxis_title="Occupancy %", plot_bgcolor="white"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
 latest_syn["derived_status"] = latest_syn["occupancy_rate_pct"].apply(occ_to_status)
 red_c = int((latest_syn["derived_status"]=="Red").sum())
 amb_c = int((latest_syn["derived_status"]=="Amber").sum())
 grn_c = int((latest_syn["derived_status"]=="Green").sum())
-
 
 #Session state 
 if "onboarded" not in st.session_state:
@@ -707,6 +755,16 @@ if page == "ED Status":
         is_chi  = "CHI" in hosp
         badge   = "Children's" if is_chi else "Public"
         maps_url = GOOGLE_MAPS.get(hosp, f"https://maps.google.com/?q={hosp.replace(' ','+')}+Ireland")
+
+        forecast = forecast_occupancy_4h(hosp, occ)
+        f_delta = forecast["predicted_4h"] - forecast["current_occ"]
+        if f_delta > 1:
+            f_word, f_color, f_arrow = "Rising", "#DC2626", "↑"
+        elif f_delta < -1:
+            f_word, f_color, f_arrow = "Falling", "#16A34A", "↓"
+        else:
+            f_word, f_color, f_arrow = "Stable", "#64748B", "→"
+
         with cols[i % 3]:
             st.markdown(f"""
             <div class="hcard">
@@ -721,9 +779,15 @@ if page == "ED Status":
                 <div class="stat-row"><span class="stat-lbl">Daily Trolleys</span><span class="stat-val">{troll}</span></div>
                 <div class="stat-row"><span class="stat-lbl">BIS</span><span class="stat-val">{bis:.1f}</span></div>
                 <div class="cap-bg"><div class="cap-fill" style="width:{cap_pct}%;background:{cap_col}"></div></div>
+                <div style="font-size:11px;color:{f_color};font-weight:600;margin:6px 0;text-align:center">
+                    {f_arrow} In 4h: {forecast['predicted_4h']:.1f}% ({f_word})
+                </div>
                 <a href="{maps_url}" target="_blank" class="maps-btn">Get Directions</a>
             </div>
             """, unsafe_allow_html=True)
+
+            if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
+                show_forecast_dialog(hosp, occ)
 
     st.divider()
     if st.button("Get personalised care recommendation", type="primary", use_container_width=True):
