@@ -7,6 +7,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import warnings
+from datetime import datetime
+last_updated = datetime.now().strftime("%B %d, %Y")
 warnings.filterwarnings("ignore")
 
 st.set_page_config(
@@ -844,7 +846,7 @@ elif page == "Patient Advice":
     st.markdown("""
     <div class="update-card">
         <span class="important-badge">Important Updates</span>
-        <span style="font-size:13px;color:#6b7280;margin-left:8px">Updated February 22, 2026</span>
+        <span style="font-size:13px;color:#6b7280;margin-left:8px">{last_updated}</span>
         <div style="background:white;border-radius:8px;padding:14px;font-size:15px;
                     color:#374151;line-height:1.7;margin-top:10px">
             Over the next <strong>1–4 weeks</strong> we expect ED attendances to go up by
