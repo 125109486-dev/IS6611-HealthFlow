@@ -1409,7 +1409,7 @@ elif page == "Contact":
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
                     <a href="tel:999" style="background:#DC2626;color:white;padding:6px 14px;
-                       border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;
+                       border-radius:6px;font-size:15px;font-weight:700;text-decoration:none;
                        letter-spacing:0.04em">CALL 999 IMMEDIATELY</a>
                     <span style="font-size:12px;color:#64748B">If you experience any of these symptoms, call emergency services right away</span>
                 </div>
@@ -1419,16 +1419,16 @@ elif page == "Contact":
     """, unsafe_allow_html=True)
 
     symptoms = [
-        (1, "Chest pain or chest tightness",           "Especially if crushing, radiating, or associated with sweating or nausea"),
-        (2, "Sudden shortness of breath",              "Could indicate respiratory failure, pulmonary embolism, or cardiac issues"),
+        (1, "Chest pain or chest tightness", "Especially if crushing, radiating, or associated with sweating or nausea"),
+        (2, "Sudden shortness of breath", "Could indicate respiratory failure, pulmonary embolism, or cardiac issues"),
         (3, "Sudden weakness, numbness, or paralysis", "Especially one-sided — possible stroke"),
-        (4, "Altered level of consciousness",          "Confusion, collapse, fainting, or unresponsiveness"),
-        (5, "Severe allergic reaction",                "Facial/lip/tongue swelling, wheezing, difficulty breathing"),
-        (6, "Uncontrolled bleeding",                   "External or suspected internal bleeding"),
-        (7, "Severe abdominal pain",                   "Especially with rigidity, fever, or vomiting"),
-        (8, "High fever with signs of infection",      "Fever + confusion, rapid heart rate, low blood pressure (possible sepsis)"),
+        (4, "Altered level of consciousness", "Confusion, collapse, fainting, or unresponsiveness"),
+        (5, "Severe allergic reaction", "Facial/lip/tongue swelling, wheezing, difficulty breathing"),
+        (6, "Uncontrolled bleeding", "External or suspected internal bleeding"),
+        (7, "Severe abdominal pain", "Especially with rigidity, fever, or vomiting"),
+        (8, "High fever with signs of infection", "Fever + confusion, rapid heart rate, low blood pressure (possible sepsis)"),
         (9, "Persistent seizures or first-time seizure","Especially if lasting more than 5 minutes"),
-        (10,"Severe headache of sudden onset",         "Sudden, intense headache unlike any experienced before"),
+        (10,"Severe headache of sudden onset", "Sudden, intense headache unlike any experienced before"),
     ]
 
     contact_symp_html = ""
