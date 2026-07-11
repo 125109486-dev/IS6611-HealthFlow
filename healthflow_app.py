@@ -7,8 +7,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import warnings
-from datetime import datetime
-last_updated = datetime.now().strftime("%B %d, %Y")
 warnings.filterwarnings("ignore")
 
 st.set_page_config(
@@ -17,6 +15,8 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+last_updated = datetime.now().strftime("%B %d, %Y")
 
 st.markdown("""
 <style>
