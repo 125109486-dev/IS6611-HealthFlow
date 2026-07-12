@@ -803,7 +803,7 @@ if page == "ED Status":
                                  padding:2px 6px;border-radius:4px">{badge}</span>
                 </div>
                 <span class="sbadge {sc}">{rl}</span>
-                <div class="stat-row"><span class="stat-lbl">Occupancy</span><span class="stat-val">{occ:.1f}%</span></div>
+                <div class="stat-row"><span class="stat-lbl">Occupancy</span><span class="stat-val">{cap_pct}%</span></div>
                 <div class="stat-row"><span class="stat-lbl">Daily Trolleys</span><span class="stat-val">{troll}</span></div>
                 <div class="stat-row"><span class="stat-lbl">Behavioural Impact Score</span><span class="stat-val">{bis:.1f}</span></div>
                 <div class="cap-bg"><div class="cap-fill" style="width:{cap_pct}%;background:{cap_col}"></div></div>
