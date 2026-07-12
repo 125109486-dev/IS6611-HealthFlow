@@ -411,18 +411,18 @@ def get_hosp_data(hospital_name):
         r   = row.iloc[0]
         occ = float(r["Occupancy_Rate_pct"]) if pd.notna(r["Occupancy_Rate_pct"]) else 5.0
         troll = int(r["Daily_Total"]) if pd.notna(r["Daily_Total"]) else 0
-        bis = r["Behavioural_Impact_Score"]
+        Behavioural Impact Score = r["Behavioural_Impact_Score"]
         # Derive status from occupancy — don't trust stale Traffic_Light_Status field
         status = occ_to_status(occ)
-        return occ, status, troll, bis
+        return occ, status, troll, Behavioural Impact Score
     row2 = latest_syn[latest_syn["Hospital"].str.lower().str.contains(hospital_name.lower().split()[0], na=False)]
     if not row2.empty:
         r2    = row2.iloc[0]
         occ   = float(r2["occupancy_rate_pct"]) if pd.notna(r2["occupancy_rate_pct"]) else 5.0
         troll = int(r2["total_trolleys"]) if pd.notna(r2.get("total_trolleys", 0)) else 0
-        bis   = float(r2.get("behavioural_impact_score", 0))
+        Behavioural Impact Score   = float(r2.get("behavioural_impact_score", 0))
         status = occ_to_status(occ)
-        return occ, status, troll, bis
+        return occ, status, troll, Behavioural Impact Score
     return 5.0, "Green", 0, 0.0
 
 def _diurnal_multiplier(hour_decimal):
@@ -774,7 +774,7 @@ if page == "ED Status":
 
     cols = st.columns(3)
     for i, hosp in enumerate(age_hospitals):
-        occ, status, troll, bis = get_hosp_data(hosp)
+        occ, status, troll, Behavioural Impact Score = get_hosp_data(hosp)
         rc, sc, rl = rag_meta(occ)
         dot_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#94A3B8")
         cap_pct = min(int(occ*10), 100)
@@ -805,7 +805,7 @@ if page == "ED Status":
                 <span class="sbadge {sc}">{rl}</span>
                 <div class="stat-row"><span class="stat-lbl">Occupancy</span><span class="stat-val">{occ:.1f}%</span></div>
                 <div class="stat-row"><span class="stat-lbl">Daily Trolleys</span><span class="stat-val">{troll}</span></div>
-                <div class="stat-row"><span class="stat-lbl">BIS</span><span class="stat-val">{bis:.1f}</span></div>
+                <div class="stat-row"><span class="stat-lbl">Behavioural Impact Score</span><span class="stat-val">{Behavioural Impact Score:.1f}</span></div>
                 <div class="cap-bg"><div class="cap-fill" style="width:{cap_pct}%;background:{cap_col}"></div></div>
                 <div style="font-size:11px;color:{f_color};font-weight:600;margin:6px 0;text-align:center">
                     {f_arrow} In 4h: {forecast['predicted_4h']:.1f}% ({f_word})
@@ -973,7 +973,7 @@ elif page == "Patient Advice":
                             st.session_state.show_urgency_change = False
                             st.rerun()
 
-    occ, status, troll, bis = get_hosp_data(sel_hosp)
+    occ, status, troll, Behavioural Impact Score = get_hosp_data(sel_hosp)
     rc, sc, rl = rag_meta(occ)
     pathway, path_c, path_desc = get_pathway(occ, urgency_type)
 
