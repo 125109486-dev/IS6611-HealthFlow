@@ -805,7 +805,7 @@ if page == "ED Status":
                 <span class="sbadge {sc}">{rl}</span>
                 <div class="stat-row"><span class="stat-lbl">Occupancy</span><span class="stat-val">{occ:.1f}%</span></div>
                 <div class="stat-row"><span class="stat-lbl">Daily Trolleys</span><span class="stat-val">{troll}</span></div>
-                <div class="stat-row"><span class="stat-lbl">ehavioural Impact Score</span><span class="stat-val">{bis:.1f}</span></div>
+                <div class="stat-row"><span class="stat-lbl">Behavioural Impact Score</span><span class="stat-val">{bis:.1f}</span></div>
                 <div class="cap-bg"><div class="cap-fill" style="width:{cap_pct}%;background:{cap_col}"></div></div>
                 <div style="font-size:11px;color:{f_color};font-weight:600;margin:6px 0;text-align:center">
                     {f_arrow} In 4h: {forecast['predicted_4h']:.1f}% ({f_word})
@@ -994,7 +994,7 @@ elif page == "Patient Advice":
         """, unsafe_allow_html=True)
         
         if urgency_type == "life":
-            st.error("Call 999 immediately. Do not drive yourself to hospital.")
+            st.error("Call 999/112 immediately. Do not drive yourself to hospital.")
         elif status == "Red":
             st.warning(f"{sel_hosp} is very busy. Consider an alternative if your condition allows.")
             alt = [h for h in HOSPITAL_MAP.get(county_pa,[]) if h != sel_hosp]
@@ -1080,9 +1080,9 @@ elif page == "Patient Advice":
         "display:flex;align-items:center;justify-content:center;color:white;font-size:20px;flex-shrink:0'>!</div>"
         "<div><div style='font-size:17px;font-weight:700;color:#0D2137;margin-bottom:6px'>"
         "10 Critical Symptoms Requiring Immediate Review</div>"
-        "<a href='tel:999' style='background:#DC2626;color:white;padding:6px 14px;"
+        "<a href='tel:999/112' style='background:#DC2626;color:white;padding:6px 14px;"
         "border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;margin-right:10px'>"
-        "CALL 999 IMMEDIATELY</a>"
+        "CALL 999/112 IMMEDIATELY</a>"
         "<span style='font-size:15px;color:#64748B'>Call emergency services right away</span>"
         "</div></div>"
         "<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px'>"
@@ -1156,7 +1156,7 @@ elif page == "Resources":
                         display:flex;align-items:center;justify-content:center;
                         margin:0 auto 14px auto;font-size:24px">3</div>
             <div style="color:#DC2626;font-size:11px;font-weight:700;letter-spacing:0.08em;margin-bottom:8px">STEP 3 — EMERGENCY ONLY</div>
-            <div style="font-size:17px;font-weight:700;color:#0D2137;margin-bottom:10px">ED / Call 999</div>
+            <div style="font-size:17px;font-weight:700;color:#0D2137;margin-bottom:10px">ED / Call 999/112</div>
             <div style="font-size:14px;color:#64748B;line-height:1.6">
                 Life-threatening symptoms, major trauma, or when advised by a clinician.
             </div>
