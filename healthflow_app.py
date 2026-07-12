@@ -300,7 +300,7 @@ def get_hospitals_for_age(county, age):
 
 def get_pathway(occ, urgency_type):
     if urgency_type == "life":
-        return "Call 999 / A&E", "#DC2626", "Call 999 immediately or go directly to your nearest A&E. Do not drive yourself."
+        return "Call 999 / 112 / A&E", "#DC2626", "Call 999/112 immediately or go directly to your nearest A&E. Do not drive yourself."
     elif urgency_type == "moderate":
         if occ >= 9:
             return "A&E", "#DC2626", "Your condition requires A&E. Consider an alternative hospital if one is less busy."
@@ -593,7 +593,7 @@ def feedback_survey():
     wcol1, wcol2 = st.columns([1, 1])
     with wcol1:
         q2 = st.selectbox("Action taken", [
-            "Select...", "Called 999 / went to A&E", "Visited a Minor Injury Unit",
+            "Select...", "Called 999 / 112 / went to A&E", "Visited a Minor Injury Unit",
             "Contacted my GP", "Used GP out-of-hours service", "Used Urgent Virtual Care (UVC)",
             "Went to a pharmacy", "Stayed at home / self-managed", "Still deciding",
         ])
@@ -680,7 +680,7 @@ if not st.session_state.onboarded:
 
     st.markdown("""
     <div style="text-align:center;margin-top:1.5rem;font-size:11px;color:#94A3B8">
-        No personal data is stored &nbsp;|&nbsp; HSE Ireland &nbsp;|&nbsp; Emergency? Call 999
+        No personal data is stored &nbsp;|&nbsp; HSE Ireland &nbsp;|&nbsp; Emergency? Call 999/112
     </div>
     """, unsafe_allow_html=True)
     st.stop()
@@ -712,7 +712,7 @@ with col_999:
     st.markdown("""
     <div style="text-align:right;padding-top:2px">
         <a href="tel:999" style="background:#DC2626;color:white;padding:6px 14px;
-           border-radius:20px;font-weight:700;font-size:13px;text-decoration:none">Call 999</a>
+           border-radius:20px;font-weight:700;font-size:13px;text-decoration:none">Call 999/112</a>
     </div>""", unsafe_allow_html=True)
 
 st.markdown("<hr style='margin:4px 0 8px 0;border:none;border-top:1px solid #E2E8F0'>", unsafe_allow_html=True)
@@ -1559,7 +1559,7 @@ elif page == "Survey":
 
         q2 = st.selectbox("What action did you actually take (or plan to take)?", [
             "Select...",
-            "Called 999 / went to A&E",
+            "Called 999/112 / went to A&E",
             "Visited a Minor Injury Unit",
             "Contacted my GP",
             "Used GP out-of-hours service",
@@ -1629,7 +1629,7 @@ elif page == "Contact":
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
                     <a href="tel:999" style="background:#DC2626;color:white;padding:6px 14px;
                        border-radius:6px;font-size:15px;font-weight:700;text-decoration:none;
-                       letter-spacing:0.04em">CALL 999 IMMEDIATELY</a>
+                       letter-spacing:0.04em">CALL 999/112 IMMEDIATELY</a>
                     <span style="font-size:15px;color:#64748B">If you experience any of these symptoms, call emergency services right away</span>
                 </div>
             </div>
@@ -1677,7 +1677,7 @@ elif page == "Contact":
             <div style="font-size:22px;color:white">☎</div>
             <div>
                 <div style="font-size:12px;color:rgba(255,255,255,0.8)">Emergency Services</div>
-                <div style="font-size:26px;font-weight:700;color:white">Call 999</div>
+                <div style="font-size:26px;font-weight:700;color:white">Call 999/112</div>
             </div>
         </div>
         <div style="font-size:18px;color:rgba(255,255,255,0.85);max-width:400px;line-height:1.5">
