@@ -805,7 +805,7 @@ if page == "ED Status":
                 <span class="sbadge {sc}">{rl}</span>
                 <div class="stat-row"><span class="stat-lbl">Occupancy</span><span class="stat-val">{occ:.1f}%</span></div>
                 <div class="stat-row"><span class="stat-lbl">Daily Trolleys</span><span class="stat-val">{troll}</span></div>
-                <div class="stat-row"><span class="stat-lbl">bis</span><span class="stat-val">{bis:.1f}</span></div>
+                <div class="stat-row"><span class="stat-lbl">ehavioural Impact Score</span><span class="stat-val">{bis:.1f}</span></div>
                 <div class="cap-bg"><div class="cap-fill" style="width:{cap_pct}%;background:{cap_col}"></div></div>
                 <div style="font-size:11px;color:{f_color};font-weight:600;margin:6px 0;text-align:center">
                     {f_arrow} In 4h: {forecast['predicted_4h']:.1f}% ({f_word})
