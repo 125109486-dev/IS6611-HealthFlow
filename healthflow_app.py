@@ -775,35 +775,35 @@ if page == "ED Status":
     sel_age    = st.session_state.get("landing_age", sel_age)
     age_hospitals, age_note = get_hospitals_for_age(sel_county, sel_age)
 
-    # Search
+# Search
     search = st.text_input("", placeholder="Search hospitals...", label_visibility="collapsed")
     if search:
         age_hospitals = [h for h in age_hospitals if search.lower() in h.lower()]
 
-st.markdown(f"<div style='color:#64748B;font-size:12px;margin-bottom:10px'>Showing <strong>{len(age_hospitals)}</strong> hospitals</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='color:#64748B;font-size:12px;margin-bottom:10px'>Showing <strong>{len(age_hospitals)}</strong> hospitals</div>", unsafe_allow_html=True)
 
-cols = st.columns(3)
-for i, hosp in enumerate(age_hospitals):
-    occ, status, troll, bis = get_hosp_data(hosp)
-    rc, sc, rl = rag_meta(occ)
-    dot_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#94A3B8")
-    cap_pct = min(int(occ*10), 100)
-    cap_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#16A34A")
-    is_chi = "CHI" in hosp
-    badge = "Children's" if is_chi else "Public"
-    maps_url = GOOGLE_MAPS.get(hosp, f"https://maps.google.com/?q={hosp.replace(' ','+')}+Ireland")
-    news_url = get_news_url(hosp)
+    cols = st.columns(3)
+    for i, hosp in enumerate(age_hospitals):
+        occ, status, troll, bis = get_hosp_data(hosp)
+        rc, sc, rl = rag_meta(occ)
+        dot_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#94A3B8")
+        cap_pct = min(int(occ*10), 100)
+        cap_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#16A34A")
+        is_chi = "CHI" in hosp
+        badge = "Children's" if is_chi else "Public"
+        maps_url = GOOGLE_MAPS.get(hosp, f"https://maps.google.com/?q={hosp.replace(' ','+')}+Ireland")
+        news_url = get_news_url(hosp)
 
-    forecast = forecast_occupancy_4h(hosp, occ)
-    f_delta = forecast["predicted_4h"] - forecast["current_occ"]
-    if f_delta > 1:
-        f_word, f_color, f_arrow = "Rising", "#DC2626", "↑"
-    elif f_delta < -1:
-        f_word, f_color, f_arrow = "Falling", "#16A34A", "↓"
-    else:
-        f_word, f_color, f_arrow = "Stable", "#64748B", "→"
+        forecast = forecast_occupancy_4h(hosp, occ)
+        f_delta = forecast["predicted_4h"] - forecast["current_occ"]
+        if f_delta > 1:
+            f_word, f_color, f_arrow = "Rising", "#DC2626", "↑"
+        elif f_delta < -1:
+            f_word, f_color, f_arrow = "Falling", "#16A34A", "↓"
+        else:
+            f_word, f_color, f_arrow = "Stable", "#64748B", "→"
 
-    with cols[i % 3]:
+        with cols[i % 3]:
             with st.container(key=f"forecast_wrap_{i}"):
                 st.markdown('<div class="forecast-btn-top">', unsafe_allow_html=True)
                 if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
@@ -831,36 +831,6 @@ for i, hosp in enumerate(age_hospitals):
                 </a>
             </div>
             """, unsafe_allow_html=True)
-
-    st.divider()
-
-            st.markdown(f"""
-            <div class="hcard">
-                <div class="tdot" style="background:{dot_col}"></div>
-                <div class="hcard-name">{hosp}</div>
-                <div class="hcard-loc">{sel_county} &nbsp;
-                    <span style="background:#EFF6FF;color:#2563EB;font-size:10px;font-weight:600;
-                                 padding:2px 6px;border-radius:4px">{badge}</span>
-                </div>
-                <span class="sbadge {sc}">{rl}</span>
-                <div class="stat-row"><span class="stat-lbl">Occupancy</span><span class="stat-val">{cap_pct}%</span></div>
-                <div class="stat-row"><span class="stat-lbl">Daily Trolleys</span><span class="stat-val">{troll}</span></div>
-                <div class="cap-bg"><div class="cap-fill" style="width:{cap_pct}%;background:{cap_col}"></div></div>
-                <div style="font-size:11px;color:{f_color};font-weight:600;margin:6px 0;text-align:center">
-                    {f_arrow} In 4h: {forecast['predicted_4h']:.1f}% ({f_word})
-                </div>
-                <a href="{maps_url}" target="_blank" class="maps-btn">Get Directions</a>
-                <a href="{news_url}" target="_blank" class="maps-btn-outline">
-                    Latest Hospital News
-                </a>
-            </div>
-            """, unsafe_allow_html=True)
-
-            with st.container(key=f"forecast_wrap_{i}"):
-                st.markdown('<div class="forecast-btn-wrap">', unsafe_allow_html=True)
-                if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
-                    show_forecast_dialog(hosp, occ)
-                st.markdown('</div>', unsafe_allow_html=True)
 
     st.divider()
     if st.button("Get personalised care recommendation", type="primary", use_container_width=True):
