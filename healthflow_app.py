@@ -53,9 +53,8 @@ st.markdown("""
 .nav-logo span{color:#0F766E ;}
 
 /* Hospital card */
-.hcard{background:white;border-radius:0 0 12px 12px;padding:20px;padding-top:12px;
-       border:1px solid #E2E8F0;border-top:none;
-       box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:14px;position:relative;
+.hcard{background:white;border-radius:12px;padding:20px;border:1px solid #E2E8F0;
+       box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:0;position:relative;
        width:100%;}
 .hcard-name{font-size:17px;font-weight:700;color:#0D2137;margin-bottom:4px;padding-right:24px;line-height:1.3;}
 .hcard-loc{font-size:14px;color:#64748B;margin-bottom:12px;}
@@ -70,13 +69,12 @@ st.markdown("""
 .cap-bg{height:7px;background:#E2E8F0;border-radius:10px;overflow:hidden;margin:8px 0 10px;}
 .cap-fill{height:100%;border-radius:10px;}
 
-/* Forecast Button */
-.forecast-btn-top{margin-bottom:0;}
-.forecast-btn-top .stButton button{
-    border-radius:12px 12px 0 0!important;
+.forecast-btn-wrap{margin-bottom:14px;margin-top:-1px;}
+.forecast-btn-wrap .stButton button{
+    border-radius:0 0 12px 12px!important;
     border:1px solid #E2E8F0!important;
-    border-bottom:none!important;
-    margin-bottom:0!important;
+    border-top:none!important;
+    margin-top:0!important;
 }
 
 /* Get Directions */
@@ -793,7 +791,6 @@ if page == "ED Status":
         badge = "Children's" if is_chi else "Public"
         maps_url = GOOGLE_MAPS.get(hosp, f"https://maps.google.com/?q={hosp.replace(' ','+')}+Ireland")
         news_url = get_news_url(hosp)
-
         forecast = forecast_occupancy_4h(hosp, occ)
         f_delta = forecast["predicted_4h"] - forecast["current_occ"]
         if f_delta > 1:
@@ -804,8 +801,30 @@ if page == "ED Status":
             f_word, f_color, f_arrow = "Stable", "#64748B", "→"
 
         with cols[i % 3]:
+            st.markdown(f"""
+            <div class="hcard">
+                <div class="tdot" style="background:{dot_col}"></div>
+                <div class="hcard-name">{hosp}</div>
+                <div class="hcard-loc">{sel_county} &nbsp;
+                    <span style="background:#EFF6FF;color:#2563EB;font-size:10px;font-weight:600;
+                                 padding:2px 6px;border-radius:4px">{badge}</span>
+                </div>
+                <span class="sbadge {sc}">{rl}</span>
+                <div class="stat-row"><span class="stat-lbl">Occupancy</span><span class="stat-val">{cap_pct}%</span></div>
+                <div class="stat-row"><span class="stat-lbl">Daily Trolleys</span><span class="stat-val">{troll}</span></div>
+                <div class="cap-bg"><div class="cap-fill" style="width:{cap_pct}%;background:{cap_col}"></div></div>
+                <div style="font-size:11px;color:{f_color};font-weight:600;margin:6px 0;text-align:center">
+                    {f_arrow} In 4h: {forecast['predicted_4h']:.1f}% ({f_word})
+                </div>
+                <a href="{maps_url}" target="_blank" class="maps-btn">Get Directions</a>
+                <a href="{news_url}" target="_blank" class="maps-btn-outline">
+                    Latest Hospital News
+                </a>
+            </div>
+            """, unsafe_allow_html=True)
+
             with st.container(key=f"forecast_wrap_{i}"):
-                st.markdown('<div class="forecast-btn-top">', unsafe_allow_html=True)
+                st.markdown('<div class="forecast-btn-wrap">', unsafe_allow_html=True)
                 if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
                     show_forecast_dialog(hosp, occ)
                 st.markdown('</div>', unsafe_allow_html=True)
