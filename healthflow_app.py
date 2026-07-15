@@ -822,15 +822,14 @@ if page == "ED Status":
                 <a href="{news_url}" target="_blank" class="maps-btn-outline">
                     Latest Hospital News
                 </a>
-
-                with st.container(key=f"forecast_wrap_{i}"):
-                    st.markdown('<div class="forecast-btn-wrap">', unsafe_allow_html=True)
-                    if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
-                        show_forecast_dialog(hosp, occ)
-                    st.markdown('</div>', unsafe_allow_html=True)
-                
             </div>
             """, unsafe_allow_html=True)
+
+            with st.container(key=f"forecast_wrap_{i}"):
+                st.markdown('<div class="forecast-btn-wrap">', unsafe_allow_html=True)
+                if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
+                    show_forecast_dialog(hosp, occ)
+                st.markdown('</div>', unsafe_allow_html=True)
 
     st.divider()
     if st.button("Get personalised care recommendation", type="primary", use_container_width=True):
