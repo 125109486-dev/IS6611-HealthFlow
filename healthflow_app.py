@@ -804,11 +804,11 @@ for i, hosp in enumerate(age_hospitals):
         f_word, f_color, f_arrow = "Stable", "#64748B", "→"
 
     with cols[i % 3]:
-        with st.container(key=f"forecast_wrap_{i}"):
-            st.markdown('<div class="forecast-btn-top">', unsafe_allow_html=True)
-            if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
-                show_forecast_dialog(hosp, occ)
-            st.markdown('</div>', unsafe_allow_html=True)
+            with st.container(key=f"forecast_wrap_{i}"):
+                st.markdown('<div class="forecast-btn-top">', unsafe_allow_html=True)
+                if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
+                    show_forecast_dialog(hosp, occ)
+                st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown(f"""
             <div class="hcard">
