@@ -783,6 +783,12 @@ if page == "ED Status":
     st.markdown(f"<div style='color:#64748B;font-size:12px;margin-bottom:10px'>Showing <strong>{len(age_hospitals)}</strong> hospitals</div>", unsafe_allow_html=True)
 
     with cols[i % 3]:
+            with st.container(key=f"forecast_wrap_{i}"):
+                st.markdown('<div class="forecast-btn-top">', unsafe_allow_html=True)
+                if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
+                    show_forecast_dialog(hosp, occ)
+                st.markdown('</div>', unsafe_allow_html=True)
+
             st.markdown(f"""
             <div class="hcard">
                 <div class="tdot" style="background:{dot_col}"></div>
@@ -804,12 +810,6 @@ if page == "ED Status":
                 </a>
             </div>
             """, unsafe_allow_html=True)
-
-            with st.container(key=f"forecast_wrap_{i}"):
-                st.markdown('<div class="forecast-btn-wrap">', unsafe_allow_html=True)
-                if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
-                    show_forecast_dialog(hosp, occ)
-                st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown(f"""
             <div class="hcard">
