@@ -782,7 +782,28 @@ if page == "ED Status":
 
     st.markdown(f"<div style='color:#64748B;font-size:12px;margin-bottom:10px'>Showing <strong>{len(age_hospitals)}</strong> hospitals</div>", unsafe_allow_html=True)
 
-    with cols[i % 3]:
+    cols = st.columns(3)
+    for i, hosp in enumerate(age_hospitals):
+        occ, status, troll, bis = get_hosp_data(hosp)
+        rc, sc, rl = rag_meta(occ)
+        dot_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#94A3B8")
+        cap_pct = min(int(occ*10), 100)
+        cap_col = {"Red":"#DC2626","Amber":"#D97706","Green":"#16A34A"}.get(status,"#16A34A")
+        is_chi = "CHI" in hosp
+        badge = "Children's" if is_chi else "Public"
+        maps_url = GOOGLE_MAPS.get(hosp, f"https://maps.google.com/?q={hosp.replace(' ','+')}+Ireland")
+        news_url = get_news_url(hosp)
+
+        forecast = forecast_occupancy_4h(hosp, occ)
+        f_delta = forecast["predicted_4h"] - forecast["current_occ"]
+        if f_delta > 1:
+            f_word, f_color, f_arrow = "Rising", "#DC2626", "↑"
+        elif f_delta < -1:
+            f_word, f_color, f_arrow = "Falling", "#16A34A", "↓"
+        else:
+            f_word, f_color, f_arrow = "Stable", "#64748B", "→"
+
+        with cols[i % 3]:
             with st.container(key=f"forecast_wrap_{i}"):
                 st.markdown('<div class="forecast-btn-top">', unsafe_allow_html=True)
                 if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
@@ -810,6 +831,8 @@ if page == "ED Status":
                 </a>
             </div>
             """, unsafe_allow_html=True)
+
+    st.divider()
 
             st.markdown(f"""
             <div class="hcard">
