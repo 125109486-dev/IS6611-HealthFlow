@@ -1,11 +1,12 @@
 import streamlit as st
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+IE_TZ = ZoneInfo("Europe/Dublin")
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -471,7 +472,7 @@ def _fit_daily_sarimax(hospital_name):
         return None
 
 def forecast_occupancy_4h(hospital_name, current_occ):
-    now = datetime.now()
+    now = datetime.now(IE_TZ)
     future = now + timedelta(hours=4)
     now_hour = now.hour + now.minute / 60
     future_hour = future.hour + future.minute / 60
