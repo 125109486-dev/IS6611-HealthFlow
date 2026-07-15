@@ -780,7 +780,7 @@ if page == "ED Status":
     if search:
         age_hospitals = [h for h in age_hospitals if search.lower() in h.lower()]
 
-    st.markdown(f"<div style='color:#64748B;font-size:12px;margin-bottom:10px'>Showing <strong>{len(age_hospitals)}</strong> hospitals</div>", unsafe_allow_html=True)
+st.markdown(f"<div style='color:#64748B;font-size:12px;margin-bottom:10px'>Showing <strong>{len(age_hospitals)}</strong> hospitals</div>", unsafe_allow_html=True)
 
     cols = st.columns(3)
     for i, hosp in enumerate(age_hospitals):
