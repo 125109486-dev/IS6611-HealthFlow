@@ -53,8 +53,9 @@ st.markdown("""
 .nav-logo span{color:#0F766E ;}
 
 /* Hospital card */
-.hcard{background:white;border-radius:12px;padding:20px;border:1px solid #E2E8F0;
-       box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:14px;position:relative;
+.hcard{background:white;border-radius:12px 12px 0 0;padding:20px;padding-bottom:12px;
+       border:1px solid #E2E8F0;border-bottom:none;
+       box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:0;position:relative;
        width:100%;}
 .hcard-name{font-size:17px;font-weight:700;color:#0D2137;margin-bottom:4px;padding-right:24px;line-height:1.3;}
 .hcard-loc{font-size:14px;color:#64748B;margin-bottom:12px;}
@@ -85,6 +86,14 @@ st.markdown("""
 .maps-btn-outline:active{
     color:#0D9488!important;
     text-decoration:none;
+}
+
+.forecast-btn-wrap{margin-bottom:14px;}
+.forecast-btn-wrap .stButton button{
+    border-radius:0 0 12px 12px!important;
+    border:1px solid #E2E8F0!important;
+    border-top:none!important;
+    margin-top:0!important;
 }
 
 /* Section */
@@ -817,8 +826,11 @@ if page == "ED Status":
             </div>
             """, unsafe_allow_html=True)
 
-            if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
-                show_forecast_dialog(hosp, occ)
+            with st.container(key=f"forecast_wrap_{i}"):
+                st.markdown('<div class="forecast-btn-wrap">', unsafe_allow_html=True)
+                if st.button("View Forecast", key=f"forecast_btn_{i}", use_container_width=True):
+                    show_forecast_dialog(hosp, occ)
+                st.markdown('</div>', unsafe_allow_html=True)
 
     st.divider()
     if st.button("Get personalised care recommendation", type="primary", use_container_width=True):
