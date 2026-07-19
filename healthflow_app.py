@@ -191,10 +191,7 @@ p, div, span, li{font-size:15px;line-height:1.7;}
 
 #Hospital map 
 HOSPITAL_MAP = {
-    "Dublin": ["Mater Misericordiae University Hospital","St. James's Hospital",
-                    "St. Vincent's University Hospital","Beaumont Hospital",
-                    "Tallaght University Hospital","Connolly Hospital Blanchardstown",
-                    "Naas General Hospital","CHI at Temple Street","CHI at Crumlin","CHI at Tallaght"],
+    "Dublin": ["Mater Misericordiae University Hospital","St. James's Hospital", "St. Vincent's University Hospital","Beaumont Hospital", "Tallaght University Hospital","Connolly Hospital Blanchardstown", "Naas General Hospital","CHI at Temple Street","CHI at Crumlin","CHI at Tallaght"],
     "Cork": ["Cork University Hospital","Mercy University Hospital"],
     "Kerry": ["University Hospital Kerry"],
     "Limerick": ["University Hospital Limerick"],
@@ -417,7 +414,7 @@ def occ_to_status(occ):
 def get_hosp_data(hospital_name):
     row = master[master["Hospital"].str.lower().str.contains(hospital_name.lower().split()[0], na=False)]
     if not row.empty:
-        r   = row.iloc[0]
+        r = row.iloc[0]
         occ = float(r["Occupancy_Rate_pct"]) if pd.notna(r["Occupancy_Rate_pct"]) else 5.0
         troll = int(r["Daily_Total"]) if pd.notna(r["Daily_Total"]) else 0
         bis = r["Behavioural_Impact_Score"]
@@ -426,17 +423,17 @@ def get_hosp_data(hospital_name):
         return occ, status, troll, bis
     row2 = latest_syn[latest_syn["Hospital"].str.lower().str.contains(hospital_name.lower().split()[0], na=False)]
     if not row2.empty:
-        r2    = row2.iloc[0]
-        occ   = float(r2["occupancy_rate_pct"]) if pd.notna(r2["occupancy_rate_pct"]) else 5.0
+        r2 = row2.iloc[0]
+        occ = float(r2["occupancy_rate_pct"]) if pd.notna(r2["occupancy_rate_pct"]) else 5.0
         troll = int(r2["total_trolleys"]) if pd.notna(r2.get("total_trolleys", 0)) else 0
-        bis   = float(r2.get("behavioural_impact_score", 0))
+        bis = float(r2.get("behavioural_impact_score", 0))
         status = occ_to_status(occ)
         return occ, status, troll, bis
     return 5.0, "Green", 0, 0.0
 
 def _diurnal_multiplier(hour_decimal):
     hours = [0, 3, 6, 9, 12, 15, 18, 21, 24]
-    mult  = [0.90, 0.82, 0.85, 1.00, 1.05, 1.10, 1.18, 1.05, 0.90]
+    mult = [0.90, 0.82, 0.85, 1.00, 1.05, 1.10, 1.18, 1.05, 0.90]
     return float(np.interp(hour_decimal % 24, hours, mult))
 
 @st.cache_data(show_spinner=False)
@@ -728,7 +725,7 @@ st.markdown("<hr style='margin:4px 0 8px 0;border:none;border-top:1px solid #E2E
 
 page = st.session_state.page
 sel_county = st.session_state.get("landing_county", list(HOSPITAL_MAP.keys())[0])
-sel_age    = st.session_state.get("landing_age", "26–64 — Adult")
+sel_age = st.session_state.get("landing_age", "26–64 — Adult")
 
 # PAGE 1 — ED STATUS
 if page == "ED Status":
@@ -771,7 +768,7 @@ if page == "ED Status":
 
     # Refresh after update
     sel_county = st.session_state.get("landing_county", sel_county)
-    sel_age    = st.session_state.get("landing_age", sel_age)
+    sel_age = st.session_state.get("landing_age", sel_age)
     age_hospitals, age_note = get_hospitals_for_age(sel_county, sel_age)
 
 # Search
@@ -942,7 +939,7 @@ elif page == "Patient Advice":
 
     sel_urg = st.session_state.sel_urgency
     urgency_type = "minor"
-    sel_bc  = "#0F766E "
+    sel_bc = "#0F766E "
     sel_sub = ""
     for ti, sub, ut, bg, bc in URGENCY_OPTIONS:
         if ti == sel_urg:
@@ -1120,7 +1117,6 @@ elif page == "Patient Advice":
                 st.warning("Please enter your email.")
 
 # PAGE 3 — RESOURCES
-
 elif page == "Resources":
     st.markdown("""
     <div class="hero">
